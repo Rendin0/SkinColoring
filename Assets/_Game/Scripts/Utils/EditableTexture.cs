@@ -15,6 +15,11 @@ public class EditableTexture : MonoBehaviour
         SetTexture();
     }
 
+    public void SetTextureSize(Vector2Int size)
+    {
+        _textureSize = size;
+    }
+
     private void SetTexture()
     {
         if (_sharedMaterial.mainTexture == null)
