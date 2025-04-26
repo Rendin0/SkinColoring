@@ -8,14 +8,12 @@ public class MouseHandler : MonoBehaviour
     private InputActions _inputActions;
     private InputHandler _inputHandler;
 
-    private Camera _camera;
+    [SerializeField] private Camera _camera;
 
     private bool isHolding = false;
 
     private void Awake()
     {
-        _camera = Camera.main;
-
         _inputActions = new InputActions();
         _inputActions.Gameplay.Enable();
 
