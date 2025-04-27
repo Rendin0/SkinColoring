@@ -43,7 +43,7 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     protected override void OnBind(ScreenGameplayViewModel viewModel)
     {
         SetSelectedTool(_toolPencilButton);
-        SetSelectedColor(_colorButtons[0]);
+        ViewModel.SetSelectedColor(_colorButtons[0].targetGraphic.color);
     }
 
     private void OnSettingsButtonClicked()
