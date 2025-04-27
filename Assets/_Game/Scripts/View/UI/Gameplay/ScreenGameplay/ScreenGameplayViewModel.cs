@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public class ScreenGameplayViewModel : WindowViewModel
 {
@@ -8,5 +9,15 @@ public class ScreenGameplayViewModel : WindowViewModel
     public ScreenGameplayViewModel(GameplayUIManager uiManager)
     {
         _uiManager = uiManager;
+    }
+
+    public void OpenSettings()
+    {
+        _uiManager.OpenPopupSettings();
+    }
+
+    public void SetSelectedColor(Color color)
+    {
+
     }
 }
