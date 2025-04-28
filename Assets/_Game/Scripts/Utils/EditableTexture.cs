@@ -37,10 +37,21 @@ public class EditableTexture : MonoBehaviour
         }
     }
 
-    public void ChangePixelColor(RaycastHit hit)
+    public void ChangePixelColor(RaycastHit hit, Color color)
     {
         var clickPoint = CalculateClickPoint(hit);
-        ColorPixel(clickPoint, Color.red);
+        ColorPixel(clickPoint, color);
+    }
+    public void ColorAllPixels(Color32 color)
+    {
+        Color32[] pixels = _texture.GetPixels32();
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            pixels[i] = color;
+        }
+
+        _texture.SetPixels32(pixels);
+        _texture.Apply();
     }
 
     /// <summary>
@@ -64,4 +75,5 @@ public class EditableTexture : MonoBehaviour
         _texture.SetPixel(point.x, point.y, color);
         _texture.Apply();
     }
+
 }

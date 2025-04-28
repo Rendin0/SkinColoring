@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using R3;
 using UnityEditor.Rendering;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System;
+using TMPro.EditorUtilities;
 
 public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 {
@@ -18,18 +21,74 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 
     [SerializeField] private List<Button> _colorButtons;
     [SerializeField] private Image _selectedColorImage;
+    private Color _selectedColor;
 
     private Camera _camera;
     private bool _isHolding = false;
 
+    private EditableModel[] _models;
+
     private void Update()
     {
-        HandleColoring();
+        HandleTools();
     }
-    private void HandleColoring()
+
+    private void HandleTools()
     {
         if (!_isHolding)
             return;
+
+        if (_selectedTool == _toolPencilButton)
+            ColorPixel();
+        else if (_selectedTool == _toolRotateButton)
+            RotateModel();
+        else if (_selectedTool == _toolEraserButton)
+            ErasePixel();
+        else
+            ClearTexutre();
+    }
+
+    private void RotateModel()
+    {
+        foreach (var editableModel in _models)
+        {
+            float xAxis = Input.GetAxis("Mouse X");
+            float yAxis = Input.GetAxis("Mouse Y");
+
+            editableModel.transform.Rotate(Vector3.down, xAxis);
+            editableModel.transform.Rotate(Vector3.forward, yAxis);
+        }
+    }
+
+    private void ClearTexutre()
+    {
+        if (TryHit<EditableTexture>(out var editableTexture, out _))
+        {
+            // Стандартный цвет текстуры
+            editableTexture.ColorAllPixels(new Color32(205, 205, 205, 205));
+        }
+    }
+
+    private void ErasePixel()
+    {
+        if (TryHit<EditableTexture>(out var editableTexture, out var hit))
+        {
+            // Стандартный цвет текстуры
+            editableTexture.ChangePixelColor(hit, new Color(0.804f, 0.804f, 0.804f, 0.804f));
+        }
+    }
+
+    private void ColorPixel()
+    {
+        if(TryHit<EditableTexture>(out var editableTexture, out var hit))
+        {
+            editableTexture.ChangePixelColor(hit, _selectedColor);
+        }
+    }
+
+    private bool TryHit<T>(out T hitObject, out RaycastHit hit) where T : MonoBehaviour
+    {
+        hitObject = null;
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             _coloringArea.rectTransform,
@@ -44,13 +103,13 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 
         var ray = _camera.ScreenPointToRay(rectRelativeMousePosition);
 
-        if (Physics.Raycast(ray, out var hit)
-            && hit.collider.TryGetComponent<EditableTexture>(out var editableTexture))
+        if (Physics.Raycast(ray, out hit)
+            && hit.collider.TryGetComponent(out hitObject))
         {
-            editableTexture.ChangePixelColor(hit);
+            return true;
         }
+        return false;
     }
-
     #region Callbacks
 
     private void OnEnable()
@@ -80,9 +139,13 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     protected override void OnBind(ScreenGameplayViewModel viewModel)
     {
         SetSelectedTool(_toolPencilButton);
-        ViewModel.SetSelectedColor(_colorButtons[0].targetGraphic.color);
+
+        _selectedColor = _colorButtons[0].targetGraphic.color;
+
         ViewModel.IsHolding.Subscribe(b => _isHolding = b);
         _camera = ViewModel.SkinCamera;
+
+        _models = FindObjectsByType<EditableModel>(FindObjectsSortMode.InstanceID);
     }
     private void OnSettingsButtonClicked()
     {
@@ -106,7 +169,8 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     private void SetSelectedColor(Button color)
     {
         _selectedColorImage.rectTransform.position = color.transform.position;
-        ViewModel.SetSelectedColor(color.targetGraphic.color);
+        _selectedColor = color.targetGraphic.color;
+        SetSelectedTool(_toolPencilButton);
     }
     #endregion
 }

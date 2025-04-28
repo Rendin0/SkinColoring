@@ -26,11 +26,6 @@ public class ScreenGameplayViewModel : WindowViewModel
         _uiManager.OpenPopupSettings();
     }
 
-    public void SetSelectedColor(Color color)
-    {
-
-    }
-
     public override void Dispose()
     {
         base.Dispose();
