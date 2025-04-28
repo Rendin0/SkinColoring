@@ -1746,6 +1746,7 @@ MonoBehaviour:
   - {fileID: 4750204006719101153}
   - {fileID: 510866292546629376}
   _selectedColorImage: {fileID: 5059826572559934102}
+  _rotateSpeed: 0.7
 --- !u!1 &4645613335510228689
 GameObject:
   m_ObjectHideFlags: 0

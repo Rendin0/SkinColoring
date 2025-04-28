@@ -9,6 +9,7 @@ public class ScreenGameplayViewModel : WindowViewModel
     private readonly GameplayUIManager _uiManager;
 
     public Subject<bool> IsHolding = new();
+    public Subject<Vector2> RotateAxis = new();
     private readonly CompositeDisposable _subs = new();
 
     public Camera SkinCamera { get; }
@@ -18,6 +19,8 @@ public class ScreenGameplayViewModel : WindowViewModel
         _uiManager = uiManager;
 
         inputHandler.MouseRequest.Subscribe(c => IsHolding.OnNext(c.performed)).AddTo(_subs);
+        inputHandler.AxisRequest.Subscribe(c => RotateAxis.OnNext(c.ReadValue<Vector2>())).AddTo(_subs);
+
         SkinCamera = skinCamera;
     }
 

@@ -25,8 +25,10 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 
     private Camera _camera;
     private bool _isHolding = false;
+    private Vector2 _rotateAxis = Vector2.zero;
 
     private EditableModel[] _models;
+    [SerializeField] private float _rotateSpeed;
 
     private void Update()
     {
@@ -52,11 +54,8 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     {
         foreach (var editableModel in _models)
         {
-            float xAxis = Input.GetAxis("Mouse X");
-            float yAxis = Input.GetAxis("Mouse Y");
-
-            editableModel.transform.Rotate(Vector3.down, xAxis);
-            editableModel.transform.Rotate(Vector3.forward, yAxis);
+            editableModel.transform.Rotate(Vector3.down, _rotateAxis.x * _rotateSpeed, Space.World);
+            editableModel.transform.Rotate(_camera.transform.right, _rotateAxis.y * _rotateSpeed, Space.World);
         }
     }
 
@@ -80,7 +79,7 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 
     private void ColorPixel()
     {
-        if(TryHit<EditableTexture>(out var editableTexture, out var hit))
+        if (TryHit<EditableTexture>(out var editableTexture, out var hit))
         {
             editableTexture.ChangePixelColor(hit, _selectedColor);
         }
@@ -143,6 +142,8 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
         _selectedColor = _colorButtons[0].targetGraphic.color;
 
         ViewModel.IsHolding.Subscribe(b => _isHolding = b);
+        ViewModel.RotateAxis.Subscribe(a => _rotateAxis = a);
+
         _camera = ViewModel.SkinCamera;
 
         _models = FindObjectsByType<EditableModel>(FindObjectsSortMode.InstanceID);
