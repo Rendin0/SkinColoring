@@ -24,9 +24,21 @@ namespace Assets._Game.Scripts.Game.Root
 
         private GameEntryPoint()
         {
+            // Coroutines
             _coroutines = new GameObject("[COROUTINES]").AddComponent<Coroutines>();
             Object.DontDestroyOnLoad(_coroutines.gameObject);
 
+            // Input
+            var inputActions = new InputActions();
+            inputActions.Gameplay.Enable();
+
+            var inputHandler = new InputHandler();
+            inputActions.Gameplay.SetCallbacks(inputHandler);
+
+            _rootContainer.RegisterInstance(inputActions);
+            _rootContainer.RegisterInstance(inputHandler);
+
+            // UI
             var prefabUIRoot = Resources.Load<UIRootView>("UI/UIRoot");
             _uiRoot = Object.Instantiate(prefabUIRoot);
             Object.DontDestroyOnLoad(_uiRoot.gameObject);

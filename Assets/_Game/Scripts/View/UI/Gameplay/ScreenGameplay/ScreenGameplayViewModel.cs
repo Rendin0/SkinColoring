@@ -1,14 +1,24 @@
+using R3;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ScreenGameplayViewModel : WindowViewModel
 {
-    private readonly GameplayUIManager _uiManager;
-
     public override string Id => "ScreenGameplay";
 
-    public ScreenGameplayViewModel(GameplayUIManager uiManager)
+    private readonly GameplayUIManager _uiManager;
+
+    public Subject<bool> IsHolding = new();
+    private readonly CompositeDisposable _subs = new();
+
+    public Camera SkinCamera { get; }
+
+    public ScreenGameplayViewModel(GameplayUIManager uiManager, InputHandler inputHandler, Camera skinCamera)
     {
         _uiManager = uiManager;
+
+        inputHandler.MouseRequest.Subscribe(c => IsHolding.OnNext(c.performed)).AddTo(_subs);
+        SkinCamera = skinCamera;
     }
 
     public void OpenSettings()
@@ -19,5 +29,12 @@ public class ScreenGameplayViewModel : WindowViewModel
     public void SetSelectedColor(Color color)
     {
 
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+
+        _subs.Dispose();
     }
 }

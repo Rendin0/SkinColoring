@@ -3,7 +3,9 @@ public static class GameplayRegistrations
 {
     public static void Register(DIContainer sceneContainer)
     {
-        sceneContainer.RegisterFactory(_ => new GameplayUIManager(sceneContainer)).AsSingle();
+        var inputHandler = sceneContainer.Resolve<InputHandler>();
+
+        sceneContainer.RegisterFactory(_ => new GameplayUIManager(sceneContainer, inputHandler)).AsSingle();
         sceneContainer.RegisterFactory(_ => new GameplaySceneUIViewModel()).AsSingle();
     }
 

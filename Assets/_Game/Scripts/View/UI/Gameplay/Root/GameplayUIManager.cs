@@ -1,15 +1,20 @@
 
 using System;
+using UnityEngine;
 
 public class GameplayUIManager : UIManager
 {
-    public GameplayUIManager(DIContainer container) : base(container)
+    private readonly InputHandler _inputHandler;
+
+    public GameplayUIManager(DIContainer container, InputHandler inputHandler) : base(container)
     {
+        this._inputHandler = inputHandler;
     }
 
     public ScreenGameplayViewModel OpenScreenGameplay()
     {
-        var viewModel = new ScreenGameplayViewModel(this);
+        var skinCamera = Container.Resolve<Camera>();
+        var viewModel = new ScreenGameplayViewModel(this, _inputHandler, skinCamera);
 
         var sceneUI = Container.Resolve<GameplaySceneUIViewModel>();
         sceneUI.OpenScreen(viewModel);

@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using R3;
+using UnityEditor.Rendering;
 
 public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 {
+    [SerializeField] private RawImage _coloringArea;
+
     [SerializeField] private Button _settingsButton;
 
     [SerializeField] private Button _toolRotateButton;
@@ -15,6 +19,39 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     [SerializeField] private List<Button> _colorButtons;
     [SerializeField] private Image _selectedColorImage;
 
+    private Camera _camera;
+    private bool _isHolding = false;
+
+    private void Update()
+    {
+        HandleColoring();
+    }
+    private void HandleColoring()
+    {
+        if (!_isHolding)
+            return;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            _coloringArea.rectTransform,
+            Input.mousePosition,
+            null,
+            out var rectRelativeMousePosition
+        );
+
+        // ScreenPointToLocalPointInRectangle возвращает точку относительно центра пр€моугольника
+        // »з-за этого необходима трансл€ци€ на половину размера
+        rectRelativeMousePosition += _coloringArea.rectTransform.rect.size / 2;
+
+        var ray = _camera.ScreenPointToRay(rectRelativeMousePosition);
+
+        if (Physics.Raycast(ray, out var hit)
+            && hit.collider.TryGetComponent<EditableTexture>(out var editableTexture))
+        {
+            editableTexture.ChangePixelColor(hit);
+        }
+    }
+
+    #region Callbacks
 
     private void OnEnable()
     {
@@ -44,8 +81,9 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     {
         SetSelectedTool(_toolPencilButton);
         ViewModel.SetSelectedColor(_colorButtons[0].targetGraphic.color);
+        ViewModel.IsHolding.Subscribe(b => _isHolding = b);
+        _camera = ViewModel.SkinCamera;
     }
-
     private void OnSettingsButtonClicked()
     {
         ViewModel.OpenSettings();
@@ -70,4 +108,5 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
         _selectedColorImage.rectTransform.position = color.transform.position;
         ViewModel.SetSelectedColor(color.targetGraphic.color);
     }
+    #endregion
 }
