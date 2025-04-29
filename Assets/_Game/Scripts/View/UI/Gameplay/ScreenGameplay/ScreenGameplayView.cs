@@ -6,6 +6,7 @@ using UnityEditor.Rendering;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System;
 using TMPro.EditorUtilities;
+using TMPro;
 
 public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 {
@@ -30,11 +31,15 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     private EditableModel[] _models;
     [SerializeField] private float _rotateSpeed;
 
+    private readonly string _completePercentString = "Соответствие: ";
+    [SerializeField] private TMP_Text _completePercentText;
+
     private void Update()
     {
         HandleTools();
     }
 
+    #region Tools
     private void HandleTools()
     {
         if (!_isHolding)
@@ -50,6 +55,21 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
             ClearTexutre();
     }
 
+    private void UpdatePercents()
+    {
+        var model1Pixels = _models[0].GetAllPixels();
+        var model2Pixels = _models[1].GetAllPixels();
+
+        int matchCount = 0;
+        for (int i = 0; i < model1Pixels.Count; i++)
+        {
+            if (model1Pixels[i] == model2Pixels[i])
+                matchCount++;
+        }
+
+        ViewModel.CompletePercent.OnNext((float)matchCount / model1Pixels.Count);
+    }
+
     private void RotateModel()
     {
         foreach (var editableModel in _models)
@@ -58,33 +78,32 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
             editableModel.transform.Rotate(_camera.transform.right, _rotateAxis.y * _rotateSpeed, Space.World);
         }
     }
-
     private void ClearTexutre()
     {
         if (TryHit<EditableTexture>(out var editableTexture, out _))
         {
             // Стандартный цвет текстуры
             editableTexture.ColorAllPixels(new Color32(205, 205, 205, 205));
+            UpdatePercents();
         }
     }
-
     private void ErasePixel()
     {
         if (TryHit<EditableTexture>(out var editableTexture, out var hit))
         {
             // Стандартный цвет текстуры
             editableTexture.ChangePixelColor(hit, new Color(0.804f, 0.804f, 0.804f, 0.804f));
+            UpdatePercents();
         }
     }
-
     private void ColorPixel()
     {
         if (TryHit<EditableTexture>(out var editableTexture, out var hit))
         {
             editableTexture.ChangePixelColor(hit, _selectedColor);
+            UpdatePercents();
         }
     }
-
     private bool TryHit<T>(out T hitObject, out RaycastHit hit) where T : MonoBehaviour
     {
         hitObject = null;
@@ -109,6 +128,8 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
         }
         return false;
     }
+    #endregion
+
     #region Callbacks
 
     private void OnEnable()
@@ -143,10 +164,13 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 
         ViewModel.IsHolding.Subscribe(b => _isHolding = b);
         ViewModel.RotateAxis.Subscribe(a => _rotateAxis = a);
+        ViewModel.CompletePercent.Subscribe(p => _completePercentText.text = $"{_completePercentString}{p * 100:00}%");
 
         _camera = ViewModel.SkinCamera;
 
         _models = FindObjectsByType<EditableModel>(FindObjectsSortMode.InstanceID);
+
+        UpdatePercents();
     }
     private void OnSettingsButtonClicked()
     {

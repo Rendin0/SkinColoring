@@ -8,11 +8,14 @@ public class ScreenGameplayViewModel : WindowViewModel
 
     private readonly GameplayUIManager _uiManager;
 
-    public Subject<bool> IsHolding = new();
-    public Subject<Vector2> RotateAxis = new();
+    public Subject<bool> IsHolding { get; } = new();
+    public Subject<Vector2> RotateAxis { get; } = new();
+
     private readonly CompositeDisposable _subs = new();
 
     public Camera SkinCamera { get; }
+
+    public ReactiveProperty<float> CompletePercent { get; } = new();
 
     public ScreenGameplayViewModel(GameplayUIManager uiManager, InputHandler inputHandler, Camera skinCamera)
     {
