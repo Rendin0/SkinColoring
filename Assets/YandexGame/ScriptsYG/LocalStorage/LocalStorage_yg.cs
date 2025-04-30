@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using UnityEngine;
+using System;
 
 namespace YG
 {
@@ -9,7 +10,6 @@ namespace YG
         {
             [DllImport("__Internal")]
             public static extern void SetKey_LocalStorage_js(string key, string value);
-
             public static void SetKey(string key, string value)
             {
 #if PLATFORM_WEBGL
