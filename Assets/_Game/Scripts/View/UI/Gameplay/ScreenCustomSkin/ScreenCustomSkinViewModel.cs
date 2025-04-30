@@ -1,23 +1,19 @@
+
 using R3;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
+public class ScreenCustomSkinViewModel : WindowViewModel, IColoringViewModel
 {
-    public override string Id => "ScreenGameplay";
-
-    private readonly GameplayUIManager _uiManager;
+    public override string Id => "ScreenCustomSkin";
 
     public Subject<bool> IsHolding { get; } = new();
     public Subject<Vector2> RotateAxis { get; } = new();
     public Camera SkinCamera { get; }
 
+    private readonly GameplayUIManager _uiManager;
     private readonly CompositeDisposable _subs = new();
 
-
-    public ReactiveProperty<float> CompletePercent { get; } = new();
-
-    public ScreenGameplayViewModel(GameplayUIManager uiManager, InputHandler inputHandler, Camera skinCamera)
+    public ScreenCustomSkinViewModel(GameplayUIManager uiManager, InputHandler inputHandler, Camera skinCamera)
     {
         _uiManager = uiManager;
 
@@ -32,9 +28,9 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
         _uiManager.OpenPopupSettings();
     }
 
-    public void OpenCustomSkin()
+    public void OpenLevels()
     {
-        _uiManager.OpenScreenCustomSkin();
+        _uiManager.OpenScreenGameplay();
     }
 
     public override void Dispose()
