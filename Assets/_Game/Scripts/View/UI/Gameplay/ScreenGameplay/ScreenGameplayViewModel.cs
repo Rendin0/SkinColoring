@@ -1,3 +1,4 @@
+using System;
 using R3;
 using UnityEngine;
 
@@ -48,5 +49,10 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
         base.Dispose();
 
         _subs.Dispose();
+    }
+
+    public void SkipLevel()
+    {
+        _uiManager.ExitScene();
     }
 }

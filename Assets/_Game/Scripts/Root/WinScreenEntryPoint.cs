@@ -1,22 +1,20 @@
 using R3;
 using UnityEngine;
 
-public class GameplayEntryPoint : MonoBehaviour
+public class WinScreenEntryPoint : MonoBehaviour
 {
-    [SerializeField] private GameplaySceneUIView _sceneUIRootPrefab;
-    [SerializeField] private Camera _skinCamera;
+    [SerializeField] private WinScreenSceneUIView _sceneUIRootPrefab;
 
     private DIContainer _sceneContainer;
-
     private readonly Subject<Unit> _exitSceneRequest = new();
 
     public Subject<Unit> Run(DIContainer sceneContaiener)
     {
         _sceneContainer = sceneContaiener;
-        _sceneContainer.RegisterInstance(_skinCamera);
-        _sceneContainer.RegisterInstance(SceneNames.Gameplay, _exitSceneRequest);
+        WinScreenRegistrations.Register(_sceneContainer);
+        _sceneContainer.RegisterInstance(SceneNames.WinScreen, _exitSceneRequest);
 
-        GameplayRegistrations.Register(_sceneContainer);
+
 
         InitUI(_sceneContainer);
 
@@ -29,11 +27,11 @@ public class GameplayEntryPoint : MonoBehaviour
         var uiScene = Instantiate(_sceneUIRootPrefab);
         uiRoot.AttachSceneUI(uiScene.gameObject);
 
-        var uiSceneRootViewModel = sceneContainer.Resolve<GameplaySceneUIViewModel>();
+        var uiSceneRootViewModel = sceneContainer.Resolve<WinScreenSceneUIViewModel>();
         uiScene.Bind(uiSceneRootViewModel);
 
         // открытие окон
-        var uiManager = sceneContainer.Resolve<GameplayUIManager>();
-        uiManager.OpenScreenGameplay();
+        var uiManager = sceneContainer.Resolve<WinScreenUIManager>();
+        uiManager.OpenScreenWin();
     }
 }

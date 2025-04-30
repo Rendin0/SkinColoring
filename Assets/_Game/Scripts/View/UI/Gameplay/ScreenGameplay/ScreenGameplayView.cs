@@ -8,6 +8,7 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _customSkinButton;
+    [SerializeField] private Button _skipLevelButton;
 
     [SerializeField] private ColoringView _coloringView;
 
@@ -36,12 +37,14 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     {
         _settingsButton.onClick.AddListener(OnSettingsButtonClicked);
         _customSkinButton.onClick.AddListener(OnCustomSkinButtonClicked);
+        _skipLevelButton.onClick.AddListener(OnSkipLevelButtonClicked);
     }
 
     private void OnDisable()
     {
         _settingsButton.onClick.RemoveAllListeners();
         _customSkinButton.onClick.RemoveAllListeners();
+        _skipLevelButton.onClick.RemoveAllListeners();
     }
 
     protected override void OnBind(ScreenGameplayViewModel viewModel)
@@ -58,6 +61,11 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     private void OnCustomSkinButtonClicked()
     {
         ViewModel.OpenCustomSkin();
+    }
+
+    private void OnSkipLevelButtonClicked()
+    {
+        ViewModel.SkipLevel();
     }
     #endregion
 }

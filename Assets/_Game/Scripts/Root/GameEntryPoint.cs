@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using R3;
 
 namespace Assets._Game.Scripts.Game.Root
 {
@@ -61,7 +62,11 @@ namespace Assets._Game.Scripts.Game.Root
         {
             _uiRoot.ShowLoadingScreen();
 
+            _rootContainer.Resolve<InputActions>().Gameplay.Enable();
+
+            yield return LoadScene(SceneNames.Boot);
             yield return null;
+            yield return LoadScene(SceneNames.Gameplay);
 
             // GameState может подгружаться из облака, так что необходимо ожидать завершения
             //var isGameStateLoaded = false;
@@ -71,7 +76,28 @@ namespace Assets._Game.Scripts.Game.Root
             var sceneContaiener = new DIContainer(_rootContainer);
 
             var sceneEntryPoint = Object.FindFirstObjectByType<GameplayEntryPoint>();
-            sceneEntryPoint.Run(sceneContaiener);
+            sceneEntryPoint.Run(sceneContaiener).Subscribe(_ => _coroutines.StartCoroutine(StartWinScreen()));
+
+            _uiRoot.HideLoadingScreen();
+        }
+
+        private IEnumerator StartWinScreen()
+        {
+            _uiRoot.ShowLoadingScreen();
+            
+            _rootContainer.Resolve<InputActions>().Gameplay.Disable();
+
+            yield return LoadScene(SceneNames.Boot);
+            yield return null;
+            yield return LoadScene(SceneNames.WinScreen);
+
+            var sceneContaiener = new DIContainer(_rootContainer);
+
+            var sceneEntryPoint = Object.FindFirstObjectByType<WinScreenEntryPoint>();
+            sceneEntryPoint.Run(sceneContaiener).Subscribe(_ =>
+            {
+                _coroutines.StartCoroutine(StartGameplay());
+            });
 
             _uiRoot.HideLoadingScreen();
         }

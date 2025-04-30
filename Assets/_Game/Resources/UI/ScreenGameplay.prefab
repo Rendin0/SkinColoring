@@ -1869,6 +1869,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _settingsButton: {fileID: 5881101082747105762}
   _customSkinButton: {fileID: 3264945180522648401}
+  _skipLevelButton: {fileID: 6260069590287122498}
   _coloringView: {fileID: 7944021516204383467}
   _completePercentText: {fileID: 3314877596306718082}
 --- !u!1 &4645613335510228689

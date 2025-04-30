@@ -1,3 +1,5 @@
+using System;
+using R3;
 using UnityEngine;
 
 public class GameplayUIManager : UIManager
@@ -39,5 +41,12 @@ public class GameplayUIManager : UIManager
         sceneUI.OpenPopup(viewModel);
 
         return viewModel;
+    }
+
+    public void ExitScene()
+    {
+        var exitSceneRequest = Container.Resolve<Subject<Unit>>(SceneNames.Gameplay);
+
+        exitSceneRequest.OnNext(Unit.Default);
     }
 }
