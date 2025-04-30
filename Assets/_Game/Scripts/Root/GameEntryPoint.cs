@@ -76,7 +76,7 @@ namespace Assets._Game.Scripts.Game.Root
             var sceneContaiener = new DIContainer(_rootContainer);
 
             var sceneEntryPoint = Object.FindFirstObjectByType<GameplayEntryPoint>();
-            sceneEntryPoint.Run(sceneContaiener).Subscribe(_ => _coroutines.StartCoroutine(StartWinScreen()));
+            sceneEntryPoint.Run(sceneContaiener, "skin").Subscribe(_ => _coroutines.StartCoroutine(StartWinScreen()));
 
             _uiRoot.HideLoadingScreen();
         }
