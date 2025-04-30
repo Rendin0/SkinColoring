@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2804023934984721574}
   - component: {fileID: 3811439361805988690}
   m_Layer: 0
-  m_Name: Left
+  m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -543,7 +543,7 @@ GameObject:
   - component: {fileID: 2868862199966972142}
   - component: {fileID: 5250707490235249503}
   m_Layer: 0
-  m_Name: Right
+  m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
