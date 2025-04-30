@@ -21,7 +21,7 @@ public class ModelCustomInspector : Editor
     {
         List<EditableTexture> textures = new();
 
-        model.BodyParts.ForEach(limb => textures.AddRange(limb.GetComponentsInChildren<EditableTexture>()));
+        //model.BodyParts.ForEach(limb => textures.AddRange(limb.GetComponentsInChildren<EditableTexture>()));
 
         foreach (var texture in textures)
         {

@@ -868,6 +868,10 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2551101439189665874, guid: 0a1114d3a8d95184fa4d100bb3da4fa4, type: 3}
+      propertyPath: _headTop
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551101439189665874, guid: 0a1114d3a8d95184fa4d100bb3da4fa4, type: 3}
       propertyPath: PixelsPerScale
       value: 4
       objectReference: {fileID: 0}
