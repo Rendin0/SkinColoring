@@ -32,11 +32,11 @@ public class EditableModel : MonoBehaviour
         _textures.AddRange(_head.SetTexture(_texture).Cast<Texture2D>());
         _textures.AddRange(_chest.SetTexture(_texture).Cast<Texture2D>());
 
-        _textures.AddRange(_leftLeg.SetTexture(_texture).Cast<Texture2D>());
         _textures.AddRange(_rightLeg.SetTexture(_texture).Cast<Texture2D>());
+        _textures.AddRange(_leftLeg.SetTexture(_texture, 16, -32).Cast<Texture2D>());
 
         _textures.AddRange(_rightArm.SetTexture(_texture).Cast<Texture2D>());
-        _textures.AddRange(_leftArm.SetTexture(_texture).Cast<Texture2D>());
+        _textures.AddRange(_leftArm.SetTexture(_texture, -8, -32).Cast<Texture2D>());
     }
 
     public List<Color> GetAllPixels()

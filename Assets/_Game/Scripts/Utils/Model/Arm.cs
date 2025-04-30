@@ -10,12 +10,12 @@ public class Arm
     [SerializeField] private Renderer _bottom;
     [SerializeField] private List<Renderer> _sides;
 
-    public List<Texture> SetTexture(Texture2D texture)
+    public List<Texture> SetTexture(Texture2D texture, int xOffset = 0, int yOffset = 0)
     {
-        _top.material.mainTexture = texture.CutTexture(44, 44, 4, 4);
-        _bottom.material.mainTexture = texture.CutTexture(48, 44, 4, 4);
+        _top.material.mainTexture = texture.CutTexture(44+ xOffset, 44 + yOffset, 4, 4);
+        _bottom.material.mainTexture = texture.CutTexture(48 + xOffset, 44 + yOffset, 4, 4);
 
-        _sides[0].sharedMaterial.mainTexture = texture.CutTexture(44, 32, 4, 12);
+        _sides[0].sharedMaterial.mainTexture = texture.CutTexture(44 + xOffset, 32 + yOffset, 4, 12);
 
         List<Texture> result = new()
         {

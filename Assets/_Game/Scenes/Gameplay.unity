@@ -872,6 +872,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2551101439189665874, guid: 0a1114d3a8d95184fa4d100bb3da4fa4, type: 3}
+      propertyPath: _texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 12583f930129c0846a68685f0325b359, type: 3}
+    - target: {fileID: 2551101439189665874, guid: 0a1114d3a8d95184fa4d100bb3da4fa4, type: 3}
       propertyPath: PixelsPerScale
       value: 4
       objectReference: {fileID: 0}
