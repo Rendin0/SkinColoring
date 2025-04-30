@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using R3;
 
 namespace Assets._Game.Scripts.Game.Root
 {

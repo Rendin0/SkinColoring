@@ -8,6 +8,7 @@ public class ScreenCustomSkinViewModel : WindowViewModel, IColoringViewModel
 
     public Subject<bool> IsHolding { get; } = new();
     public Subject<Vector2> RotateAxis { get; } = new();
+    public Subject<bool> RMB { get; } = new();
     public Camera SkinCamera { get; }
 
     private readonly GameplayUIManager _uiManager;
@@ -19,6 +20,11 @@ public class ScreenCustomSkinViewModel : WindowViewModel, IColoringViewModel
 
         inputHandler.MouseRequest.Subscribe(c => IsHolding.OnNext(c.performed)).AddTo(_subs);
         inputHandler.AxisRequest.Subscribe(c => RotateAxis.OnNext(c.ReadValue<Vector2>())).AddTo(_subs);
+        inputHandler.RMBRequest.Subscribe(c =>
+        {
+            if (!c.started)
+                RMB.OnNext(c.performed);
+        }).AddTo(_subs);
 
         SkinCamera = skinCamera;
     }

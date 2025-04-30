@@ -1,12 +1,7 @@
-using System.Collections.Generic;
+using R3;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using R3;
-using UnityEditor.Rendering;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System;
-using TMPro.EditorUtilities;
-using TMPro;
 
 public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 {
@@ -19,7 +14,7 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     private readonly string _completePercentString = "Соответствие: ";
     [SerializeField] private TMP_Text _completePercentText;
 
-    
+
 
     private void UpdatePercents(EditableModel model1, EditableModel model2)
     {
@@ -35,7 +30,7 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 
         ViewModel.CompletePercent.OnNext((float)matchCount / model1Pixels.Count);
     }
-    
+
     #region Callbacks
     private void OnEnable()
     {

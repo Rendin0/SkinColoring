@@ -7,7 +7,7 @@ namespace YG.Example
     {
         public Text text;
 
-        private string initEventText, 
+        private string initEventText,
             initAwakeText;
         private static int initEventCounter;
 

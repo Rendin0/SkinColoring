@@ -1,6 +1,5 @@
 using R3;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
 {
@@ -10,6 +9,8 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
 
     public Subject<bool> IsHolding { get; } = new();
     public Subject<Vector2> RotateAxis { get; } = new();
+    public Subject<bool> RMB { get; } = new();
+
     public Camera SkinCamera { get; }
 
     private readonly CompositeDisposable _subs = new();
@@ -23,6 +24,11 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
 
         inputHandler.MouseRequest.Subscribe(c => IsHolding.OnNext(c.performed)).AddTo(_subs);
         inputHandler.AxisRequest.Subscribe(c => RotateAxis.OnNext(c.ReadValue<Vector2>())).AddTo(_subs);
+        inputHandler.RMBRequest.Subscribe(c =>
+        {
+            if (!c.started)
+                RMB.OnNext(c.performed);
+        }).AddTo(_subs);
 
         SkinCamera = skinCamera;
     }

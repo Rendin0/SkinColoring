@@ -7,4 +7,5 @@ public interface IColoringViewModel
     Camera SkinCamera { get; }
     Subject<bool> IsHolding { get; }
     Subject<Vector2> RotateAxis { get; }
+    Subject<bool> RMB { get; }
 }

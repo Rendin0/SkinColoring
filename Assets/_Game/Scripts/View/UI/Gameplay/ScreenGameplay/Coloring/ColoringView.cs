@@ -14,6 +14,7 @@ public class ColoringView : MonoBehaviour
     [SerializeField] private Button _toolEraserButton;
     [SerializeField] private Button _toolClearButton;
     private Button _selectedTool;
+    private Button _prevSelectedTool;
 
     [SerializeField] private List<Button> _colorButtons;
     [SerializeField] private Image _selectedColorImage;
@@ -121,6 +122,7 @@ public class ColoringView : MonoBehaviour
 
         viewModel.IsHolding.Subscribe(b => _isHolding = b);
         viewModel.RotateAxis.Subscribe(a => _rotateAxis = a);
+        viewModel.RMB.Subscribe(b => OnRMB(b));
 
         _models = FindObjectsByType<EditableModel>(FindObjectsSortMode.InstanceID);
 
@@ -152,8 +154,23 @@ public class ColoringView : MonoBehaviour
         SetSelectedTool(tool);
     }
 
+    private void OnRMB(bool isHolding)
+    {
+        _isHolding = isHolding;
+        if (_isHolding)
+        {
+            _prevSelectedTool = _selectedTool;
+            SetSelectedTool(_toolRotateButton);
+        }
+        else
+            SetSelectedTool(_prevSelectedTool);
+    }
+
     private void SetSelectedTool(Button tool)
     {
+        if (tool == null)
+            return;
+
         if (_selectedTool != null)
             _selectedTool.targetGraphic.color = Color.clear;
 
