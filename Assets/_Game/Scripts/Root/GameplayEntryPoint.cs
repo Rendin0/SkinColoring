@@ -9,11 +9,14 @@ public class GameplayEntryPoint : MonoBehaviour
     [SerializeField] private EditableModel _playerSkin;
     [SerializeField] private EditableModel _originalSkin;
 
+    [SerializeField] private Skins _skins;
+
     private DIContainer _sceneContainer;
 
     private readonly Subject<Unit> _exitSceneRequest = new();
 
-    public Subject<Unit> Run(DIContainer sceneContaiener, string skinName)
+
+    public Subject<Unit> Run(DIContainer sceneContaiener, int levelId)
     {
         _sceneContainer = sceneContaiener;
         _sceneContainer.RegisterInstance(_skinCamera);
@@ -21,9 +24,7 @@ public class GameplayEntryPoint : MonoBehaviour
 
         GameplayRegistrations.Register(_sceneContainer);
 
-        _playerSkin.SetModelTexture(Resources.Load<Texture2D>($"Skins/skin"));
-        _originalSkin.SetModelTexture(Resources.Load<Texture2D>($"Skins/{skinName}"));
-
+        InitSkins(levelId);
         InitUI(_sceneContainer);
 
         return _exitSceneRequest;
@@ -41,5 +42,19 @@ public class GameplayEntryPoint : MonoBehaviour
         // открытие окон
         var uiManager = sceneContainer.Resolve<GameplayUIManager>();
         uiManager.OpenScreenGameplay();
+    }
+
+    private void InitSkins(int levelId)
+    {
+        _playerSkin.SetModelTexture(_skins.BlankSkin);
+
+        if (levelId < _skins.SkinTextures.Count)
+        {
+            _originalSkin.SetModelTexture(_skins.SkinTextures[levelId]);
+            return;
+        }
+
+        int randomId = Random.Range(0, _skins.SkinTextures.Count);
+        _originalSkin.SetModelTexture(_skins.SkinTextures[randomId]);
     }
 }

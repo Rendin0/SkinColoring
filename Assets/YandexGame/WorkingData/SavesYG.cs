@@ -18,7 +18,7 @@ namespace YG
 
         // Ваши сохранения
 
-        // ...
+        public int LevelId = 0;
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 
@@ -29,6 +29,11 @@ namespace YG
             // Допустим, задать значения по умолчанию для отдельных элементов массива
 
             openLevels[1] = true;
+        }
+
+        public void SetData(GameState gameState)
+        {
+            LevelId = gameState.LevelId;
         }
     }
 }

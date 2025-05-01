@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using R3;
+using YG;
 
 namespace Assets._Game.Scripts.Game.Root
 {
@@ -26,7 +27,11 @@ namespace Assets._Game.Scripts.Game.Root
         {
             // Coroutines
             _coroutines = new GameObject("[COROUTINES]").AddComponent<Coroutines>();
+            _coroutines.Init(_rootContainer);
             Object.DontDestroyOnLoad(_coroutines.gameObject);
+
+            GameStateService stateService = new(_coroutines);
+            _rootContainer.RegisterInstance(stateService);
 
             // Input
             var inputActions = new InputActions();
@@ -47,8 +52,7 @@ namespace Assets._Game.Scripts.Game.Root
             //IConfigProvider configProvider = new LocalConfigProvider();
             //_rootContainer.RegisterInstance(configProvider);
 
-            //IGameStateProvider gameStateProvider = new PlayerPrefsGameStateProvider();
-            //_rootContainer.RegisterInstance(gameStateProvider);
+
         }
 
         private void Run()
@@ -65,18 +69,23 @@ namespace Assets._Game.Scripts.Game.Root
             _rootContainer.Resolve<InputActions>().Gameplay.Enable();
 
             yield return LoadScene(SceneNames.Boot);
-            yield return null;
+
+            yield return new WaitUntil(() => YandexGame.SDKEnabled);
+            var stateService = _rootContainer.Resolve<GameStateService>();
+            stateService.Load();
+            stateService.StartAutoSave();
+
+
             yield return LoadScene(SceneNames.Gameplay);
 
-            // GameState может подгружаться из облака, так что необходимо ожидать завершения
-            //var isGameStateLoaded = false;
-            //_rootContainer.Resolve<IGameStateProvider>().LoadGameState().Subscribe(_ => isGameStateLoaded = true);
-            //yield return new WaitUntil(() => isGameStateLoaded);
+            
+            int levelId = stateService.GameState.LevelId;
 
             var sceneContaiener = new DIContainer(_rootContainer);
 
             var sceneEntryPoint = Object.FindFirstObjectByType<GameplayEntryPoint>();
-            sceneEntryPoint.Run(sceneContaiener, "skin").Subscribe(_ => _coroutines.StartCoroutine(StartWinScreen()));
+            // Подписка на событие выхода из сцены
+            sceneEntryPoint.Run(sceneContaiener, levelId).Subscribe(_ => _coroutines.StartCoroutine(StartWinScreen()));
 
             _uiRoot.HideLoadingScreen();
         }
@@ -84,7 +93,11 @@ namespace Assets._Game.Scripts.Game.Root
         private IEnumerator StartWinScreen()
         {
             _uiRoot.ShowLoadingScreen();
-            
+
+            var stateService = _rootContainer.Resolve<GameStateService>();
+            stateService.GameState.LevelId += 1;
+            stateService.Save();
+
             _rootContainer.Resolve<InputActions>().Gameplay.Disable();
 
             yield return LoadScene(SceneNames.Boot);
@@ -94,10 +107,8 @@ namespace Assets._Game.Scripts.Game.Root
             var sceneContaiener = new DIContainer(_rootContainer);
 
             var sceneEntryPoint = Object.FindFirstObjectByType<WinScreenEntryPoint>();
-            sceneEntryPoint.Run(sceneContaiener).Subscribe(_ =>
-            {
-                _coroutines.StartCoroutine(StartGameplay());
-            });
+            // Подписка на событие выхода из сцены
+            sceneEntryPoint.Run(sceneContaiener).Subscribe(_ => _coroutines.StartCoroutine(StartGameplay()));
 
             _uiRoot.HideLoadingScreen();
         }
