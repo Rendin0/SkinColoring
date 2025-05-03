@@ -14,8 +14,12 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 
     private readonly string _completePercentString = "Соответствие: ";
     [SerializeField] private TMP_Text _completePercentText;
+    [SerializeField] private TMP_Text _coinsText;
+    [SerializeField] private TMP_Text _scoreText;
 
+    [SerializeField] private ScrollRect _scrollBar;
 
+    private readonly CompositeDisposable _subs = new();
 
     private void UpdatePercents(EditableModel model1, EditableModel model2)
     {
@@ -49,10 +53,20 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 
     protected override void OnBind(ScreenGameplayViewModel viewModel)
     {
-        ViewModel.CompletePercent.Subscribe(p => _completePercentText.text = $"{_completePercentString}{p * 100:00}%");
+        ViewModel.CompletePercent.Subscribe(p => _completePercentText.text = $"{_completePercentString}{p * 100:00.0}%");
+        ViewModel.Coins.Subscribe(c => _coinsText.text = $"{c}").AddTo(_subs);
+        ViewModel.Score.Subscribe(s => _scoreText.text = $"Очки: {s}").AddTo(_subs);
 
-        _coloringView.Bind(viewModel, UpdatePercents);
+        _coloringView.Bind(viewModel, viewModel.Colors, UpdatePercents);
+
+        _scrollBar.horizontalNormalizedPosition = 0f;
     }
+
+    private void OnDestroy()
+    {
+        _subs.Dispose();
+    }
+
     private void OnSettingsButtonClicked()
     {
         ViewModel.OpenSettings();

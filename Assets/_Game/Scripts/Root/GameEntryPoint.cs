@@ -51,8 +51,6 @@ namespace Assets._Game.Scripts.Game.Root
 
             //IConfigProvider configProvider = new LocalConfigProvider();
             //_rootContainer.RegisterInstance(configProvider);
-
-
         }
 
         private void Run()
@@ -70,22 +68,26 @@ namespace Assets._Game.Scripts.Game.Root
 
             yield return LoadScene(SceneNames.Boot);
 
-            yield return new WaitUntil(() => YandexGame.SDKEnabled);
             var stateService = _rootContainer.Resolve<GameStateService>();
             stateService.Load();
-            stateService.StartAutoSave();
-
 
             yield return LoadScene(SceneNames.Gameplay);
 
-            
-            int levelId = stateService.GameState.LevelId;
+
+            int levelId = stateService.GameState.LevelId.Value;
 
             var sceneContaiener = new DIContainer(_rootContainer);
 
             var sceneEntryPoint = Object.FindFirstObjectByType<GameplayEntryPoint>();
             // Подписка на событие выхода из сцены
-            sceneEntryPoint.Run(sceneContaiener, levelId).Subscribe(_ => _coroutines.StartCoroutine(StartWinScreen()));
+            sceneEntryPoint.Run(sceneContaiener, levelId).Subscribe(isCompleted =>
+            {
+                if (isCompleted)
+                    _coroutines.StartCoroutine(StartWinScreen());
+                else
+                    _coroutines.StartCoroutine(StartGameplay());
+            });
+
 
             _uiRoot.HideLoadingScreen();
         }
@@ -95,7 +97,7 @@ namespace Assets._Game.Scripts.Game.Root
             _uiRoot.ShowLoadingScreen();
 
             var stateService = _rootContainer.Resolve<GameStateService>();
-            stateService.GameState.LevelId += 1;
+            stateService.GameState.LevelId.Value += 1;
             stateService.Save();
 
             _rootContainer.Resolve<InputActions>().Gameplay.Disable();

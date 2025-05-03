@@ -19,6 +19,8 @@ namespace YG
         // Ваши сохранения
 
         public int LevelId = 0;
+        public int Score = 0;
+        public int Coins = 0;
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 
@@ -33,7 +35,9 @@ namespace YG
 
         public void SetData(GameState gameState)
         {
-            LevelId = gameState.LevelId;
+            LevelId = gameState.LevelId.Value;
+            Score = gameState.Score.Value;
+            Coins = gameState.Coins.Value;
         }
     }
 }

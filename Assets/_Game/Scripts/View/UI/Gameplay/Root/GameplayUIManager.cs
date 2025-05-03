@@ -1,20 +1,28 @@
 using System;
+using System.Collections.Generic;
 using R3;
 using UnityEngine;
 
 public class GameplayUIManager : UIManager
 {
     private readonly InputHandler _inputHandler;
+    private readonly List<Color> _colors;
 
     public GameplayUIManager(DIContainer container, InputHandler inputHandler) : base(container)
     {
         this._inputHandler = inputHandler;
     }
 
+    public GameplayUIManager(DIContainer container, InputHandler inputHandler, List<Color> colors) : this(container, inputHandler)
+    {
+        this._colors = colors;
+    }
+
     public ScreenGameplayViewModel OpenScreenGameplay()
     {
         var skinCamera = Container.Resolve<Camera>();
-        var viewModel = new ScreenGameplayViewModel(this, _inputHandler, skinCamera);
+        var gameState = Container.Resolve<GameStateService>().GameState;
+        var viewModel = new ScreenGameplayViewModel(this, _inputHandler, skinCamera, gameState, _colors);
 
         var sceneUI = Container.Resolve<GameplaySceneUIViewModel>();
         sceneUI.OpenScreen(viewModel);
@@ -25,7 +33,8 @@ public class GameplayUIManager : UIManager
     public ScreenCustomSkinViewModel OpenScreenCustomSkin()
     {
         var skinCamera = Container.Resolve<Camera>();
-        var viewModel = new ScreenCustomSkinViewModel(this, _inputHandler, skinCamera);
+        var gameState = Container.Resolve<GameStateService>().GameState;
+        var viewModel = new ScreenCustomSkinViewModel(this, _inputHandler, skinCamera, gameState);
 
         var sceneUI = Container.Resolve<GameplaySceneUIViewModel>();
         sceneUI.OpenScreen(viewModel);
@@ -43,10 +52,18 @@ public class GameplayUIManager : UIManager
         return viewModel;
     }
 
-    public void ExitScene()
+    public void SkipLevel()
     {
-        var exitSceneRequest = Container.Resolve<Subject<Unit>>(SceneNames.Gameplay);
+        var exitSceneRequest = Container.Resolve<Subject<bool>>(SceneNames.Gameplay);
+        YGUtils.ShowRewarded(Rewards.SkipLevel);
 
-        exitSceneRequest.OnNext(Unit.Default);
+        exitSceneRequest.OnNext(false);
+    }
+
+    public void ContinueLevel()
+    {
+        var exitSceneRequest = Container.Resolve<Subject<bool>>(SceneNames.Gameplay);
+
+        exitSceneRequest.OnNext(true);
     }
 }

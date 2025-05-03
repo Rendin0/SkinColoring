@@ -1,5 +1,6 @@
 
 using R3;
+using System;
 using UnityEngine;
 
 public class WinScreenUIManager : UIManager
@@ -21,6 +22,10 @@ public class WinScreenUIManager : UIManager
 
     public void ExitScene()
     {
+        var stateService = Container.Resolve<GameStateService>();
+        stateService.GameState.Coins.Value += 50;
+        stateService.Save();
+
         var exitSceneRequest = Container.Resolve<Subject<Unit>>(SceneNames.WinScreen);
         exitSceneRequest.OnNext(Unit.Default);
     }

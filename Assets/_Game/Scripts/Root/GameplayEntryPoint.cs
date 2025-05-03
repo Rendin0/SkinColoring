@@ -1,5 +1,7 @@
 using R3;
+using System.Linq;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameplayEntryPoint : MonoBehaviour
 {
@@ -13,18 +15,18 @@ public class GameplayEntryPoint : MonoBehaviour
 
     private DIContainer _sceneContainer;
 
-    private readonly Subject<Unit> _exitSceneRequest = new();
+    private readonly Subject<bool> _exitSceneRequest = new();
 
 
-    public Subject<Unit> Run(DIContainer sceneContaiener, int levelId)
+    public Subject<bool> Run(DIContainer sceneContaiener, int levelId)
     {
         _sceneContainer = sceneContaiener;
         _sceneContainer.RegisterInstance(_skinCamera);
         _sceneContainer.RegisterInstance(SceneNames.Gameplay, _exitSceneRequest);
 
-        GameplayRegistrations.Register(_sceneContainer);
+        var colors = InitSkins(levelId);
+        GameplayRegistrations.Register(_sceneContainer, colors);
 
-        InitSkins(levelId);
         InitUI(_sceneContainer);
 
         return _exitSceneRequest;
@@ -44,17 +46,21 @@ public class GameplayEntryPoint : MonoBehaviour
         uiManager.OpenScreenGameplay();
     }
 
-    private void InitSkins(int levelId)
+    private List<Color> InitSkins(int levelId)
     {
         _playerSkin.SetModelTexture(_skins.BlankSkin);
 
         if (levelId < _skins.SkinTextures.Count)
         {
             _originalSkin.SetModelTexture(_skins.SkinTextures[levelId]);
-            return;
+            return _originalSkin.GetAllPixels().Distinct().ToList();
         }
 
         int randomId = Random.Range(0, _skins.SkinTextures.Count);
         _originalSkin.SetModelTexture(_skins.SkinTextures[randomId]);
+
+        List<Color> skinColors = _originalSkin.GetAllPixels().Distinct().ToList();
+
+        return skinColors;
     }
 }

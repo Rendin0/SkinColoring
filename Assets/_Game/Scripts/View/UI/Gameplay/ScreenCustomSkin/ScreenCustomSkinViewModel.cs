@@ -10,11 +10,14 @@ public class ScreenCustomSkinViewModel : WindowViewModel, IColoringViewModel
     public Subject<Vector2> RotateAxis { get; } = new();
     public Subject<bool> RMB { get; } = new();
     public Camera SkinCamera { get; }
+    public Observable<int> Coins { get; }
+    public Observable<int> Score { get; }
+
 
     private readonly GameplayUIManager _uiManager;
     private readonly CompositeDisposable _subs = new();
 
-    public ScreenCustomSkinViewModel(GameplayUIManager uiManager, InputHandler inputHandler, Camera skinCamera)
+    public ScreenCustomSkinViewModel(GameplayUIManager uiManager, InputHandler inputHandler, Camera skinCamera, GameState gameState)
     {
         _uiManager = uiManager;
 
@@ -26,6 +29,8 @@ public class ScreenCustomSkinViewModel : WindowViewModel, IColoringViewModel
                 RMB.OnNext(c.performed);
         }).AddTo(_subs);
 
+        Score = gameState.Score;
+        Coins = gameState.Coins;
         SkinCamera = skinCamera;
     }
 

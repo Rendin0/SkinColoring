@@ -16,8 +16,10 @@ public class ColoringView : MonoBehaviour
     private Button _selectedTool;
     private Button _prevSelectedTool;
 
-    [SerializeField] private List<Button> _colorButtons;
+    [SerializeField] private Button _colorButtonPrefab;
+    [SerializeField] private RectTransform _colorButtonsContainer;
     [SerializeField] private Image _selectedColorImage;
+    private readonly List<Button> _colorButtons = new();
     private Color _selectedColor;
 
     private Camera _camera;
@@ -111,14 +113,15 @@ public class ColoringView : MonoBehaviour
     #endregion
 
     #region Bindings
-    public void Bind(IColoringViewModel viewModel, Action<EditableModel, EditableModel> updatePercents = null)
+    public void Bind(IColoringViewModel viewModel, List<Color> colors, Action<EditableModel, EditableModel> updatePercents = null)
     {
+        InitColors(colors);
+
         _drawCallback = updatePercents;
         _camera = viewModel.SkinCamera;
 
         SetSelectedTool(_toolPencilButton);
 
-        _selectedColor = _colorButtons[0].targetGraphic.color;
 
         viewModel.IsHolding.Subscribe(b => _isHolding = b);
         viewModel.RotateAxis.Subscribe(a => _rotateAxis = a);
@@ -129,6 +132,22 @@ public class ColoringView : MonoBehaviour
         _drawCallback?.Invoke(_models[0], _models[1]);
     }
 
+    private void InitColors(List<Color> colors)
+    {
+        foreach (var color in colors)
+        {
+            var button = Instantiate(_colorButtonPrefab);
+            button.targetGraphic.color = color;
+            button.transform.SetParent(_colorButtonsContainer, true);
+
+            _colorButtons.Add(button);
+        }
+
+        _colorButtons.ForEach(color => color.onClick.AddListener(() => SetSelectedColor(color)));
+        _selectedColor = _colorButtons[0].targetGraphic.color;
+    }
+
+
     private void OnEnable()
     {
         _toolRotateButton.onClick.AddListener(() => OnToolButtonClicked(_toolRotateButton));
@@ -136,7 +155,6 @@ public class ColoringView : MonoBehaviour
         _toolEraserButton.onClick.AddListener(() => OnToolButtonClicked(_toolEraserButton));
         _toolClearButton.onClick.AddListener(() => OnToolButtonClicked(_toolClearButton));
 
-        _colorButtons.ForEach(color => color.onClick.AddListener(() => SetSelectedColor(color)));
     }
 
     private void OnDisable()

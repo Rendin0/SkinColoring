@@ -1,17 +1,20 @@
-using System;
-using UnityEditor.Overlays;
+using R3;
 using YG;
 
-[Serializable]
 public class GameState
 {
-    public int LevelId = 0;
+    public ReactiveProperty<int> LevelId = new(0);
+    public ReactiveProperty<int> Score = new(0);
+    public ReactiveProperty<int> Coins = new(0);
+
 
     public static explicit operator GameState(SavesYG savesYG)
     {
         GameState state = new()
         {
-            LevelId = savesYG.LevelId,
+            LevelId = new(savesYG.LevelId),
+            Score = new(savesYG.Score),
+            Coins = new(savesYG.Coins),
         };
 
         return state;

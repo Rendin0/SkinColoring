@@ -19,7 +19,7 @@ public class Leg
 
         List<Texture> result = new()
         {
-            _top.material.mainTexture,
+            //_top.material.mainTexture,
             _bottom.material.mainTexture,
             _sides[0].material.mainTexture
         };

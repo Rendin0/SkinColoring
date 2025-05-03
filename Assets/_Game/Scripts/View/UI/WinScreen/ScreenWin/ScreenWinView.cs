@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class ScreenWinView : WindowView<ScreenWinViewModel>
 {
@@ -27,6 +28,6 @@ public class ScreenWinView : WindowView<ScreenWinViewModel>
 
     private void OnSkipButtonClicked()
     {
-        ViewModel.ContinueLevel();
+        ViewModel.SkipLevel();
     }
 }

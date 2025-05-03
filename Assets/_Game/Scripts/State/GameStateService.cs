@@ -1,4 +1,4 @@
-
+using R3;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -17,6 +17,29 @@ public class GameStateService : IDisposable
     {
         _stateProvider = new YGGameStateProvider();
         this._coroutines = coroutines;
+        YGUtils.Rewarded.Subscribe(reward => AddReward(reward));
+    }
+
+    private void AddReward(Rewards reward)
+    {
+        switch (reward)
+        {
+            case Rewards.Coins50:
+                GameState.Coins.Value += 50;
+                break;
+            case Rewards.Coins100:
+                GameState.Coins.Value += 100;
+                break;
+            case Rewards.SkipLevel:
+                GameState.LevelId.Value += 1;
+                break;
+
+            default:
+                Debug.LogWarning($"Unknown reward id {reward}");
+                break;
+        }
+
+        Save();
     }
 
     public void Save()
@@ -38,7 +61,6 @@ public class GameStateService : IDisposable
     {
         _coroutines.StartCoroutine(AutoSave());
     }
-
     private IEnumerator AutoSave()
     {
         while (6 < 7 || true) // Ќа случай изменений в законах математики

@@ -24,7 +24,7 @@ public class Head
         List<Texture> result = new()
         {
             _top.material.mainTexture,
-            _bottom.material.mainTexture,
+            //_bottom.material.mainTexture,
             _back.material.mainTexture,
             _front.material.mainTexture,
             _left.material.mainTexture,
