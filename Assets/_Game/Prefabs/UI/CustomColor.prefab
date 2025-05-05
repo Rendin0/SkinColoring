@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buyColorButton: {fileID: 3445279068264783472}
-  _buyPrice: 50
+  _buyPrice: 200
 --- !u!1 &4858339531419611988
 GameObject:
   m_ObjectHideFlags: 0
