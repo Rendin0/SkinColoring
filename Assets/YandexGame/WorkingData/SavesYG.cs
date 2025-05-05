@@ -1,4 +1,8 @@
 ﻿
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
 namespace YG
 {
     [System.Serializable]
@@ -21,14 +25,16 @@ namespace YG
         public int LevelId = 0;
         public int Score = 0;
         public int Coins = 0;
+        public SerializableDictionary<Color, bool> UnlockedColors = new();
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 
 
         // Вы можете выполнить какие то действия при загрузке сохранений
-        public SavesYG()
+        public SavesYG(/*CustomSkinColors colors*/)
         {
             // Допустим, задать значения по умолчанию для отдельных элементов массива
+            
 
             openLevels[1] = true;
         }
@@ -38,6 +44,12 @@ namespace YG
             LevelId = gameState.LevelId.Value;
             Score = gameState.Score.Value;
             Coins = gameState.Coins.Value;
+
+            UnlockedColors = new();
+            foreach (var color in gameState.UnlockedColors)
+            {
+                UnlockedColors[color.Key.Color] = color.Value;
+            }
         }
     }
 }

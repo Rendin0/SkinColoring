@@ -24,6 +24,7 @@ public class WinScreenUIManager : UIManager
     {
         var stateService = Container.Resolve<GameStateService>();
         stateService.GameState.Coins.Value += 50;
+        stateService.GameState.Score.Value += 200;
         stateService.Save();
 
         var exitSceneRequest = Container.Resolve<Subject<Unit>>(SceneNames.WinScreen);

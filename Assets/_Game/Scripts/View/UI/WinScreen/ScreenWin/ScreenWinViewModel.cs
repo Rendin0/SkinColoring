@@ -13,7 +13,7 @@ public class ScreenWinViewModel : WindowViewModel
 
     public void ContinueLevel()
     {
-        YGUtils.ShowRewarded(Rewards.Coins100);
+        YGUtils.ShowRewarded(Rewards.AfterLevel);
         _uiManager.ExitScene();
     }
 

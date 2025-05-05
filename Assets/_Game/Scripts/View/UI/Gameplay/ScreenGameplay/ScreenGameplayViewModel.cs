@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using ObservableCollections;
 using R3;
 using UnityEngine;
 
@@ -14,7 +16,7 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
     public Subject<bool> RMB { get; } = new();
     public Observable<int> Coins;
     public Observable<int> Score;
-    public List<Color> Colors;
+    public ObservableDictionary<CustomColorViewModel, bool> Colors;
 
     public Camera SkinCamera { get; }
 
@@ -44,7 +46,7 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
         Score = gameState.Score;
         Coins = gameState.Coins;
 
-        Colors = colors;
+        Colors = new(colors.ToDictionary(item => new CustomColorViewModel(item, true), item => true));
         SkinCamera = skinCamera;
     }
 

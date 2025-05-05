@@ -1,3 +1,4 @@
+using ObservableCollections;
 using R3;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ public class ColoringView : MonoBehaviour
     private Button _selectedTool;
     private Button _prevSelectedTool;
 
-    [SerializeField] private Button _colorButtonPrefab;
+    [SerializeField] private CustomColorView _colorButtonPrefab;
     [SerializeField] private RectTransform _colorButtonsContainer;
     [SerializeField] private Image _selectedColorImage;
     private readonly List<Button> _colorButtons = new();
@@ -113,7 +114,11 @@ public class ColoringView : MonoBehaviour
     #endregion
 
     #region Bindings
-    public void Bind(IColoringViewModel viewModel, List<Color> colors, Action<EditableModel, EditableModel> updatePercents = null)
+    public void Bind(
+        IColoringViewModel viewModel,
+        ObservableDictionary<CustomColorViewModel, bool> colors,
+        Action<EditableModel, EditableModel> updatePercents = null
+    )
     {
         InitColors(colors);
 
@@ -132,15 +137,15 @@ public class ColoringView : MonoBehaviour
         _drawCallback?.Invoke(_models[0], _models[1]);
     }
 
-    private void InitColors(List<Color> colors)
+    private void InitColors(ObservableDictionary<CustomColorViewModel, bool> colors)
     {
         foreach (var color in colors)
         {
             var button = Instantiate(_colorButtonPrefab);
-            button.targetGraphic.color = color;
+            button.Bind(color.Key);
             button.transform.SetParent(_colorButtonsContainer, true);
 
-            _colorButtons.Add(button);
+            _colorButtons.Add(button.Button);
         }
 
         _colorButtons.ForEach(color => color.onClick.AddListener(() => SetSelectedColor(color)));

@@ -2,6 +2,6 @@
 public enum Rewards
 {
     Coins50 = 0,
-    Coins100 = 1,
+    AfterLevel = 1,
     SkipLevel = 2,
 }

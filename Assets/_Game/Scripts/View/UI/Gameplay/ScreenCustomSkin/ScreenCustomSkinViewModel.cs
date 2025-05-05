@@ -10,6 +10,7 @@ public class ScreenCustomSkinViewModel : WindowViewModel, IColoringViewModel
     public Subject<Vector2> RotateAxis { get; } = new();
     public Subject<bool> RMB { get; } = new();
     public Camera SkinCamera { get; }
+    public GameState GameState { get; }
     public Observable<int> Coins { get; }
     public Observable<int> Score { get; }
 
@@ -32,6 +33,7 @@ public class ScreenCustomSkinViewModel : WindowViewModel, IColoringViewModel
         Score = gameState.Score;
         Coins = gameState.Coins;
         SkinCamera = skinCamera;
+        GameState = gameState;
     }
 
     public void OpenSettings()

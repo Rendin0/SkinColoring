@@ -1,3 +1,4 @@
+using ObservableCollections;
 using R3;
 using System;
 using System.Collections;
@@ -27,7 +28,8 @@ public class GameStateService : IDisposable
             case Rewards.Coins50:
                 GameState.Coins.Value += 50;
                 break;
-            case Rewards.Coins100:
+            case Rewards.AfterLevel:
+                GameState.Score.Value += 400;
                 GameState.Coins.Value += 100;
                 break;
             case Rewards.SkipLevel:
@@ -41,6 +43,19 @@ public class GameStateService : IDisposable
 
         Save();
     }
+    private bool BuyColor(CustomColorViewModel color, int price)
+    {
+        if (GameState.Coins.Value < price)
+            return false;
+
+        GameState.Coins.Value -= price;
+        GameState.UnlockedColors[color] = true;
+        Save();
+
+        color.IsObtained.OnNext(true);
+
+        return true;
+    }
 
     public void Save()
     {
@@ -50,6 +65,26 @@ public class GameStateService : IDisposable
     public void Load()
     {
         GameState = _stateProvider.Load();
+        LoadColors(GameState);
+        Save();
+    }
+
+    private void LoadColors(GameState gameState)
+    {
+        if (gameState.UnlockedColors.Count == 0)
+        {
+            var colors = Resources.Load<CustomSkinColors>("CustomSkinColors");
+            foreach (var color in colors.Colors)
+            {
+                var customColor = new CustomColorViewModel(color, false);
+                gameState.UnlockedColors[customColor] = customColor.IsObtained.Value;
+            }
+        }
+
+        foreach (var color in GameState.UnlockedColors)
+        {
+            color.Key.BuyColorRequest.Subscribe(price => BuyColor(color.Key, price));
+        }
     }
 
     public void Dispose()

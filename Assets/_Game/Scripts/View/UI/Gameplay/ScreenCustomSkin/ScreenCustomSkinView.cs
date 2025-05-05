@@ -4,6 +4,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class ScreenCustomSkinView : WindowView<ScreenCustomSkinViewModel>
 {
@@ -40,9 +41,9 @@ public class ScreenCustomSkinView : WindowView<ScreenCustomSkinViewModel>
 
     protected override void OnBind(ScreenCustomSkinViewModel viewModel)
     {
-        _coloringView.Bind(viewModel, _colors.Colors);
+        _coloringView.Bind(viewModel, viewModel.GameState.UnlockedColors);
         viewModel.Coins.Subscribe(c => _coinsText.text = $"{c}").AddTo(_subs);
-        viewModel.Score.Subscribe(s => _scoreText.text = $"Очки: {s}").AddTo(_subs);
+        viewModel.Score.Subscribe(s => _scoreText.text = $"{s}").AddTo(_subs);
     }
     private void OnDestroy()
     {

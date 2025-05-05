@@ -12,7 +12,6 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 
     [SerializeField] private ColoringView _coloringView;
 
-    private readonly string _completePercentString = "Соответствие: ";
     [SerializeField] private TMP_Text _completePercentText;
     [SerializeField] private TMP_Text _coinsText;
     [SerializeField] private TMP_Text _scoreText;
@@ -53,9 +52,9 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
 
     protected override void OnBind(ScreenGameplayViewModel viewModel)
     {
-        ViewModel.CompletePercent.Subscribe(p => _completePercentText.text = $"{_completePercentString}{p * 100:00.0}%");
+        ViewModel.CompletePercent.Subscribe(p => _completePercentText.text = $"{p * 100:00.0}%");
         ViewModel.Coins.Subscribe(c => _coinsText.text = $"{c}").AddTo(_subs);
-        ViewModel.Score.Subscribe(s => _scoreText.text = $"Очки: {s}").AddTo(_subs);
+        ViewModel.Score.Subscribe(s => _scoreText.text = $"{s}").AddTo(_subs);
 
         _coloringView.Bind(viewModel, viewModel.Colors, UpdatePercents);
 
