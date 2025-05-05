@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2804023934984721574}
   - component: {fileID: 3811439361805988690}
   m_Layer: 0
-  m_Name: Side 1
+  m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,7 +122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d34d73f1d1c7448bf1b6d4f846522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textureSize: {x: 4, y: 12}
 --- !u!1 &3335051474992296983
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,7 +281,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d34d73f1d1c7448bf1b6d4f846522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textureSize: {x: 4, y: 4}
 --- !u!1 &5363346072166037247
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,7 +295,7 @@ GameObject:
   - component: {fileID: 1289202742180293696}
   - component: {fileID: 368399813838343167}
   m_Layer: 0
-  m_Name: Side 3
+  m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -405,7 +403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d34d73f1d1c7448bf1b6d4f846522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textureSize: {x: 4, y: 12}
 --- !u!1 &7501379993467748573
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,7 +417,7 @@ GameObject:
   - component: {fileID: 8178845004689610428}
   - component: {fileID: 6235432551609379884}
   m_Layer: 0
-  m_Name: Side 0
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -528,7 +525,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d34d73f1d1c7448bf1b6d4f846522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textureSize: {x: 4, y: 12}
 --- !u!1 &7724305235491958077
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,7 +539,7 @@ GameObject:
   - component: {fileID: 2868862199966972142}
   - component: {fileID: 5250707490235249503}
   m_Layer: 0
-  m_Name: Side 2
+  m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -651,7 +647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d34d73f1d1c7448bf1b6d4f846522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textureSize: {x: 4, y: 12}
 --- !u!1 &7858807713442283519
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,4 +769,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d34d73f1d1c7448bf1b6d4f846522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textureSize: {x: 4, y: 4}

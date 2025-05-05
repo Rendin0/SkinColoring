@@ -50,7 +50,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c8005e1a01516409a693a65316e08c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _texture: {fileID: 2800000, guid: aacbbf0174fed004f8581430bd497979, type: 3}
   _head:
     _top: {fileID: 3578445785709355037}
     _bottom: {fileID: 4521745042618150689}
@@ -68,35 +67,31 @@ MonoBehaviour:
   _leftArm:
     _top: {fileID: 6566464437693744258}
     _bottom: {fileID: 6073529396611304382}
-    _sides:
-    - {fileID: 4287151607867466740}
-    - {fileID: 1336965877855502122}
-    - {fileID: 1452461054771509317}
-    - {fileID: 229890508471431791}
+    _front: {fileID: 229890508471431791}
+    _back: {fileID: 4287151607867466740}
+    _left: {fileID: 1336965877855502122}
+    _right: {fileID: 1452461054771509317}
   _rightArm:
     _top: {fileID: 330806730660496973}
     _bottom: {fileID: 864133311545706865}
-    _sides:
-    - {fileID: 7262199301760360763}
-    - {fileID: 5564862563122839013}
-    - {fileID: 5449262948735646346}
-    - {fileID: 6667361916635525280}
+    _front: {fileID: 6667361916635525280}
+    _back: {fileID: 7262199301760360763}
+    _left: {fileID: 5564862563122839013}
+    _right: {fileID: 5449262948735646346}
   _leftLeg:
     _top: {fileID: 6218288720912086329}
     _bottom: {fileID: 6422848809760995845}
-    _sides:
-    - {fileID: 3896754509356962383}
-    - {fileID: 2298757040037023377}
-    - {fileID: 1820340020386351614}
-    - {fileID: 1034618502249219028}
+    _front: {fileID: 1034618502249219028}
+    _back: {fileID: 3896754509356962383}
+    _left: {fileID: 2298757040037023377}
+    _right: {fileID: 1820340020386351614}
   _rightLeg:
     _top: {fileID: 7754085935233377728}
     _bottom: {fileID: 7274802412234238716}
-    _sides:
-    - {fileID: 847746705027220150}
-    - {fileID: 2463772389774564968}
-    - {fileID: 2635983663123536135}
-    - {fileID: 3714472150978319149}
+    _front: {fileID: 3714472150978319149}
+    _back: {fileID: 847746705027220150}
+    _left: {fileID: 2463772389774564968}
+    _right: {fileID: 2635983663123536135}
 --- !u!1001 &1583538808214528809
 PrefabInstance:
   m_ObjectHideFlags: 0

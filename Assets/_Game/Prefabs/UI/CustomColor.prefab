@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buyColorButton: {fileID: 3445279068264783472}
-  _buyPrice: 200
+  _buyPrice: 50
 --- !u!1 &4858339531419611988
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +267,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -13.28, y: 0}
+  m_AnchoredPosition: {x: -10, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9013497305834923694
@@ -343,8 +343,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -6.211, y: 0}
-  m_SizeDelta: {x: -27.578, y: 0}
+  m_AnchoredPosition: {x: -7.9333, y: 0}
+  m_SizeDelta: {x: -24.133, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8288694326413394004
 CanvasRenderer:
@@ -376,12 +376,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5c7e0f19f0370bd499e947830ad609bc, type: 3}
-    m_FontSize: 25
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

@@ -8,7 +8,7 @@ public class EditableModel : MonoBehaviour
     [SerializeField] private Head _head;
 
     [SerializeField] private Chest _chest;
-    
+
     [SerializeField] private Arm _leftArm;
     [SerializeField] private Arm _rightArm;
 
@@ -25,16 +25,17 @@ public class EditableModel : MonoBehaviour
         _textures.AddRange(_chest.SetTexture(texture).Cast<Texture2D>());
 
         _textures.AddRange(_rightLeg.SetTexture(texture).Cast<Texture2D>());
-        _textures.AddRange(_leftLeg.SetTexture(texture, 16, -32).Cast<Texture2D>());
+        _textures.AddRange(_leftLeg.SetTexture(texture, 16, -32, true).Cast<Texture2D>());
 
         _textures.AddRange(_rightArm.SetTexture(texture).Cast<Texture2D>());
-        _textures.AddRange(_leftArm.SetTexture(texture, -8, -32).Cast<Texture2D>());
+        _textures.AddRange(_leftArm.SetTexture(texture, -8, -32, true).Cast<Texture2D>());
     }
 
     public List<Color> GetAllPixels()
     {
         var pixels = new List<Color>();
         _textures.ForEach(texture => pixels.AddRange(texture.GetPixels()));
+
         return pixels;
     }
 }

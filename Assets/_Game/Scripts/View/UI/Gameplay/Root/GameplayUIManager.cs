@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using R3;
 using UnityEngine;
+using YG;
 
 public class GameplayUIManager : UIManager
 {
@@ -27,6 +28,8 @@ public class GameplayUIManager : UIManager
         var sceneUI = Container.Resolve<GameplaySceneUIViewModel>();
         sceneUI.OpenScreen(viewModel);
 
+        YandexGame.FullscreenShow();
+
         return viewModel;
     }
 
@@ -38,6 +41,8 @@ public class GameplayUIManager : UIManager
 
         var sceneUI = Container.Resolve<GameplaySceneUIViewModel>();
         sceneUI.OpenScreen(viewModel);
+
+        YandexGame.FullscreenShow();
 
         return viewModel;
     }

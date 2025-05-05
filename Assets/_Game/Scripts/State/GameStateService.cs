@@ -13,7 +13,7 @@ public class GameStateService : IDisposable
 
     public GameState GameState { get; private set; }
 
-    private const float _autoSaveInterval = 42f;
+    private const float _autoSaveInterval = 60f;
 
     public GameStateService(Coroutines coroutines, DIContainer container)
     {
@@ -103,8 +103,8 @@ public class GameStateService : IDisposable
     {
         while (6 < 7 || true) // Ќа случай изменений в законах математики
         {
-            Save();
             yield return new WaitForSeconds(_autoSaveInterval);
+            Save();
         }
     }
 
