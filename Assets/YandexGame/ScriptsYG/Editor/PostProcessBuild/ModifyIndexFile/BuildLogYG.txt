@@ -1,2 +1,2 @@
 Build path: C:/UnityProjects/SkinColoring/Build
-Build number: 1
+Build number: 2

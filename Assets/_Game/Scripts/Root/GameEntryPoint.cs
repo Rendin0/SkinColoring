@@ -30,7 +30,7 @@ namespace Assets._Game.Scripts.Game.Root
             _coroutines.Init(_rootContainer);
             Object.DontDestroyOnLoad(_coroutines.gameObject);
 
-            GameStateService stateService = new(_coroutines);
+            GameStateService stateService = new(_coroutines, _rootContainer);
             _rootContainer.RegisterInstance(stateService);
 
             // Input
@@ -48,6 +48,17 @@ namespace Assets._Game.Scripts.Game.Root
             _uiRoot = Object.Instantiate(prefabUIRoot);
             Object.DontDestroyOnLoad(_uiRoot.gameObject);
             _rootContainer.RegisterInstance(_uiRoot);
+
+            var gameplayExitSceneRequest = new Subject<bool>();
+            
+            _rootContainer.RegisterInstance(SceneNames.Gameplay, gameplayExitSceneRequest);
+            gameplayExitSceneRequest.Subscribe(isCompleted =>
+            {
+                if (isCompleted)
+                    _coroutines.StartCoroutine(StartWinScreen());
+                else
+                    _coroutines.StartCoroutine(StartGameplay());
+            });
 
             //IConfigProvider configProvider = new LocalConfigProvider();
             //_rootContainer.RegisterInstance(configProvider);
@@ -80,13 +91,8 @@ namespace Assets._Game.Scripts.Game.Root
 
             var sceneEntryPoint = Object.FindFirstObjectByType<GameplayEntryPoint>();
             // Подписка на событие выхода из сцены
-            sceneEntryPoint.Run(sceneContaiener, levelId).Subscribe(isCompleted =>
-            {
-                if (isCompleted)
-                    _coroutines.StartCoroutine(StartWinScreen());
-                else
-                    _coroutines.StartCoroutine(StartGameplay());
-            });
+            sceneEntryPoint.Run(sceneContaiener, levelId);
+            
 
 
             _uiRoot.HideLoadingScreen();

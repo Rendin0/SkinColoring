@@ -9,15 +9,17 @@ public class GameStateService : IDisposable
 {
     private readonly IGameStateProvider _stateProvider;
     private readonly Coroutines _coroutines;
+    private readonly DIContainer _container;
 
     public GameState GameState { get; private set; }
 
     private const float _autoSaveInterval = 42f;
 
-    public GameStateService(Coroutines coroutines)
+    public GameStateService(Coroutines coroutines, DIContainer container)
     {
         _stateProvider = new YGGameStateProvider();
         this._coroutines = coroutines;
+        this._container = container;
         YGUtils.Rewarded.Subscribe(reward => AddReward(reward));
     }
 
@@ -34,6 +36,7 @@ public class GameStateService : IDisposable
                 break;
             case Rewards.SkipLevel:
                 GameState.LevelId.Value += 1;
+                _container.Resolve<Subject<bool>>(SceneNames.Gameplay).OnNext(false);
                 break;
 
             default:

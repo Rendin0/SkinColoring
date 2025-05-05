@@ -15,21 +15,15 @@ public class GameplayEntryPoint : MonoBehaviour
 
     private DIContainer _sceneContainer;
 
-    private readonly Subject<bool> _exitSceneRequest = new();
-
-
-    public Subject<bool> Run(DIContainer sceneContaiener, int levelId)
+    public void Run(DIContainer sceneContaiener, int levelId)
     {
         _sceneContainer = sceneContaiener;
         _sceneContainer.RegisterInstance(_skinCamera);
-        _sceneContainer.RegisterInstance(SceneNames.Gameplay, _exitSceneRequest);
 
         var colors = InitSkins(levelId);
         GameplayRegistrations.Register(_sceneContainer, colors);
 
         InitUI(_sceneContainer);
-
-        return _exitSceneRequest;
     }
 
     private void InitUI(DIContainer sceneContainer)

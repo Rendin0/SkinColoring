@@ -122,7 +122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d34d73f1d1c7448bf1b6d4f846522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textureSize: {x: 8, y: 8}
 --- !u!1 &3335051474992296983
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,7 +281,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d34d73f1d1c7448bf1b6d4f846522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textureSize: {x: 8, y: 8}
 --- !u!1 &5363346072166037247
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,7 +403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d34d73f1d1c7448bf1b6d4f846522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textureSize: {x: 8, y: 8}
 --- !u!1 &7501379993467748573
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,7 +525,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d34d73f1d1c7448bf1b6d4f846522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textureSize: {x: 8, y: 8}
 --- !u!1 &7724305235491958077
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,7 +647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d34d73f1d1c7448bf1b6d4f846522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textureSize: {x: 8, y: 8}
 --- !u!1 &7858807713442283519
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,13 +675,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7858807713442283519}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: -1, z: 1}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 418042832418650699}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: -90, z: 0}
 --- !u!33 &4639853881098006833
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -774,4 +769,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d34d73f1d1c7448bf1b6d4f846522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textureSize: {x: 8, y: 8}

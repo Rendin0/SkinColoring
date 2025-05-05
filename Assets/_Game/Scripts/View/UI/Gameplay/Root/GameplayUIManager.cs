@@ -56,8 +56,6 @@ public class GameplayUIManager : UIManager
     {
         var exitSceneRequest = Container.Resolve<Subject<bool>>(SceneNames.Gameplay);
         YGUtils.ShowRewarded(Rewards.SkipLevel);
-
-        exitSceneRequest.OnNext(false);
     }
 
     public void ContinueLevel()

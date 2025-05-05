@@ -14,5 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlankSkin: {fileID: 2800000, guid: d06a0c70aeb542f40b2077819c0c1f6f, type: 3}
   SkinTextures:
-  - {fileID: 2800000, guid: aacbbf0174fed004f8581430bd497979, type: 3}
-  - {fileID: 2800000, guid: 12583f930129c0846a68685f0325b359, type: 3}
+  - {fileID: 2800000, guid: 62bec0a1ff4a0cc40963e8da3ee5aca6, type: 3}
+  - {fileID: 2800000, guid: bddf6f339dac54944a3627c018915aad, type: 3}
+  - {fileID: 2800000, guid: 6dd642773de7d3948957644c44a4062b, type: 3}
+  - {fileID: 2800000, guid: f94ecbd50597577498f68414c098d7d6, type: 3}
+  - {fileID: 2800000, guid: 0f3a19ffee61bde4d9920eb222bdc799, type: 3}
+  - {fileID: 2800000, guid: 67baa42785ba8c14e82c64781839de2d, type: 3}
+  - {fileID: 2800000, guid: 9e4c9d1ff5f545345aecf64a2f5a3491, type: 3}
+  - {fileID: 2800000, guid: 57da1ba04a246214a8791dbb7616558f, type: 3}
+  - {fileID: 2800000, guid: 8e7ef797bdf62264ea75e6f77b1e3658, type: 3}
+  - {fileID: 2800000, guid: 51036fd04086e9a4a801b0da800c7b08, type: 3}
+  - {fileID: 2800000, guid: 43dbbe88ac88ddf49a272bffb66ce04e, type: 3}
+  - {fileID: 2800000, guid: 5ec2694de2e4da148bcaf67d71092b51, type: 3}
+  - {fileID: 2800000, guid: fb8e7a2736bc5d647940d74a817d89fb, type: 3}
+  - {fileID: 2800000, guid: 56be0f6b56a0e4645b7e7e57716308da, type: 3}
+  - {fileID: 2800000, guid: ed97390806d851a4589a6cfa12507e0a, type: 3}
+  - {fileID: 2800000, guid: 956f8b71d4fe3584c8748101999116f8, type: 3}
+  - {fileID: 2800000, guid: 93265d90513c4514b9eaefbc42943b4e, type: 3}
+  - {fileID: 2800000, guid: 718f6de05f1baa94fb2d34eeccce577d, type: 3}
