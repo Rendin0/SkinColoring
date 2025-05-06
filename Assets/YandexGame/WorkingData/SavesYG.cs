@@ -26,6 +26,8 @@ namespace YG
         public int Score = 0;
         public int Coins = 0;
         public SerializableDictionary<Color, bool> UnlockedColors = new();
+        public bool HasSeenGeneralTip = false;
+        public bool HasSeenCustomSkinTip = false;
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 
@@ -44,6 +46,8 @@ namespace YG
             LevelId = gameState.LevelId.Value;
             Score = gameState.Score.Value;
             Coins = gameState.Coins.Value;
+            HasSeenGeneralTip = gameState.HasSeenGeneralTip.Value;
+            HasSeenCustomSkinTip = gameState.HasSeenCustomSkinTip.Value;
 
             UnlockedColors = new();
             foreach (var color in gameState.UnlockedColors)

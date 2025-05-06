@@ -16,6 +16,8 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
     public Subject<bool> RMB { get; } = new();
     public Observable<int> Coins;
     public Observable<int> Score;
+    public Observable<bool> HasSeenGeneralTip;
+    public Observable<bool> HasSeenCustomSkinTip;
     public ObservableDictionary<CustomColorViewModel, bool> Colors;
 
     public Camera SkinCamera { get; }
@@ -45,6 +47,9 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
 
         Score = gameState.Score;
         Coins = gameState.Coins;
+        HasSeenGeneralTip = gameState.HasSeenGeneralTip;
+        HasSeenCustomSkinTip = gameState.HasSeenCustomSkinTip;
+
 
         Colors = new(colors.ToDictionary(item => new CustomColorViewModel(item, true), item => true));
         SkinCamera = skinCamera;
