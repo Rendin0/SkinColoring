@@ -16,7 +16,7 @@ public class Tip : MonoBehaviour
 
     private void OnDisable()
     {
-        _tipButton.onClick.RemoveAllListeners();
+        _tipButton.onClick.RemoveListener(OnTipButtonClicked);
     }
 
     private void OnTipButtonClicked()

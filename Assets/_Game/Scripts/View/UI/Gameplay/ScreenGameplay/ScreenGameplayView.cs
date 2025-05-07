@@ -22,6 +22,8 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     [SerializeField] private TipsContainer _generalTips;
     [SerializeField] private TipsContainer _customSkinTips;
 
+    [SerializeField] private Image _confettiGif;
+
     private readonly CompositeDisposable _subs = new();
 
     private void UpdatePercents(EditableModel model1, EditableModel model2)
@@ -68,7 +70,7 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
         ViewModel.CompletePercent.Skip(5).Subscribe(p =>
         {
             if (p >= 1f)
-                EndLevel();
+                StartCoroutine(EndLevel());
         });
 
         _coloringView.Bind(viewModel, viewModel.Colors, UpdatePercents);
@@ -113,28 +115,27 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
         ViewModel.SkipLevel();
     }
 
-    private void EndLevel()
+    private IEnumerator EndLevel()
     {
         var models = _coloringView.EndLevel();
         var startRotation = models[0].transform.rotation;
-        var endRotation = new Quaternion(0, 270, 0, 0);
+        var endRotation = Quaternion.Euler(new Vector3(0, 270, 0));
 
-        var vidPlayer = FindFirstObjectByType<VidPlayer>();
-        vidPlayer.PlayVideo();
+        _confettiGif.gameObject.SetActive(true);
 
-
-        float time = 30f;
+        float time = 2.5f;
         float waitTimer = 0f;
 
         while (waitTimer <= time)
         {
-            models[0].transform.rotation = Quaternion.Lerp(startRotation, endRotation, waitTimer / time);
-            models[1].transform.rotation = Quaternion.Lerp(startRotation, endRotation, waitTimer / time);
+            models[0].transform.rotation = Quaternion.Lerp(startRotation, endRotation, waitTimer);
+            models[1].transform.rotation = Quaternion.Lerp(startRotation, endRotation, waitTimer);
 
+            yield return new WaitForSeconds(Time.deltaTime);
             waitTimer += Time.deltaTime;
         }
 
-        vidPlayer.StopVideo();
+        _confettiGif.gameObject.SetActive(false);
 
         ViewModel.ContinueLevel();
     }
