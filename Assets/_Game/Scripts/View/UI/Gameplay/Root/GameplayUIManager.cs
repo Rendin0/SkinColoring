@@ -8,22 +8,24 @@ public class GameplayUIManager : UIManager
 {
     private readonly InputHandler _inputHandler;
     private readonly List<Color> _colors;
+    private readonly string _skinNick;
 
     public GameplayUIManager(DIContainer container, InputHandler inputHandler) : base(container)
     {
         this._inputHandler = inputHandler;
     }
 
-    public GameplayUIManager(DIContainer container, InputHandler inputHandler, List<Color> colors) : this(container, inputHandler)
+    public GameplayUIManager(DIContainer container, InputHandler inputHandler, List<Color> colors, string skinNick) : this(container, inputHandler)
     {
         this._colors = colors;
+        _skinNick = skinNick;
     }
 
     public ScreenGameplayViewModel OpenScreenGameplay()
     {
         var skinCamera = Container.Resolve<Camera>();
         var gameState = Container.Resolve<GameStateService>().GameState;
-        var viewModel = new ScreenGameplayViewModel(this, _inputHandler, skinCamera, gameState, _colors);
+        var viewModel = new ScreenGameplayViewModel(this, _inputHandler, skinCamera, gameState, _colors, _skinNick);
 
         var sceneUI = Container.Resolve<GameplaySceneUIViewModel>();
         sceneUI.OpenScreen(viewModel);

@@ -20,8 +20,8 @@ public class GameplayEntryPoint : MonoBehaviour
         _sceneContainer = sceneContaiener;
         _sceneContainer.RegisterInstance(_skinCamera);
 
-        var colors = InitSkins(levelId);
-        GameplayRegistrations.Register(_sceneContainer, colors);
+        var (name, colors) = InitSkins(levelId);
+        GameplayRegistrations.Register(_sceneContainer, colors, name);
 
         InitUI(_sceneContainer);
     }
@@ -40,21 +40,24 @@ public class GameplayEntryPoint : MonoBehaviour
         uiManager.OpenScreenGameplay();
     }
 
-    private List<Color> InitSkins(int levelId)
+    private (string, List<Color>) InitSkins(int levelId)
     {
         _playerSkin.SetModelTexture(_skins.BlankSkin);
+        string skinName;
 
         if (levelId < _skins.SkinTextures.Count)
         {
             _originalSkin.SetModelTexture(_skins.SkinTextures[levelId]);
-            return _originalSkin.GetAllPixels().Distinct().ToList();
+            skinName = _skins.SkinTextures[levelId].name;
+            return (skinName, _originalSkin.GetAllPixels().Distinct().ToList());
         }
 
         int randomId = Random.Range(0, _skins.SkinTextures.Count);
+        skinName = _skins.SkinTextures[randomId].name;
         _originalSkin.SetModelTexture(_skins.SkinTextures[randomId]);
 
         List<Color> skinColors = _originalSkin.GetAllPixels().Distinct().ToList();
 
-        return skinColors;
+        return (skinName, skinColors);
     }
 }

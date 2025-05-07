@@ -16,6 +16,7 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     [SerializeField] private TMP_Text _completePercentText;
     [SerializeField] private TMP_Text _coinsText;
     [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private TMP_Text _skinNickText;
 
     [SerializeField] private ScrollRect _scrollBar;
 
@@ -66,6 +67,7 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
         ViewModel.CompletePercent.Subscribe(p => _completePercentText.text = $"{p * 100:00.0}%");
         ViewModel.Coins.Subscribe(c => _coinsText.text = $"{c}").AddTo(_subs);
         ViewModel.Score.Subscribe(s => _scoreText.text = $"{s}").AddTo(_subs);
+        _skinNickText.text = ViewModel.SkinNick;
 
         ViewModel.CompletePercent.Skip(5).Subscribe(p =>
         {

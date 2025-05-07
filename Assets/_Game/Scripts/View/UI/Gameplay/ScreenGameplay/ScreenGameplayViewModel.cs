@@ -22,6 +22,7 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
     public ReactiveProperty<bool> HasSeenCustomSkinTip;
     public ObservableDictionary<CustomColorViewModel, bool> Colors;
     public int LevelId { get; }
+    public string SkinNick { get; }
 
     public Camera SkinCamera { get; }
 
@@ -30,7 +31,7 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
 
     public ReactiveProperty<float> CompletePercent { get; } = new();
 
-    public ScreenGameplayViewModel(GameplayUIManager uiManager, InputHandler inputHandler, Camera skinCamera, GameState gameState, List<Color> colors)
+    public ScreenGameplayViewModel(GameplayUIManager uiManager, InputHandler inputHandler, Camera skinCamera, GameState gameState, List<Color> colors, string skinNick)
     {
         _uiManager = uiManager;
 
@@ -47,6 +48,7 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
         Score = gameState.Score;
         Coins = gameState.Coins;
         LevelId = gameState.LevelId.Value;
+        SkinNick = skinNick;
         HasSeenGeneralTip = gameState.HasSeenGeneralTip;
         HasSeenCustomSkinTip = gameState.HasSeenCustomSkinTip;
 
