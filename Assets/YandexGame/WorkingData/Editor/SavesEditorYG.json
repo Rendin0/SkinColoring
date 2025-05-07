@@ -1,5 +1,5 @@
 {
-    "idSave": 10,
+    "idSave": 39,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
@@ -10,7 +10,7 @@
         true,
         false
     ],
-    "LevelId": 4,
+    "LevelId": 2,
     "Score": 0,
     "Coins": 0,
     "UnlockedColors": {
@@ -43,5 +43,7 @@
                 "Value": false
             }
         ]
-    }
+    },
+    "HasSeenGeneralTip": true,
+    "HasSeenCustomSkinTip": true
 }

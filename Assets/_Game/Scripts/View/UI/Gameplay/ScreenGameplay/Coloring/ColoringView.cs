@@ -26,6 +26,8 @@ public class ColoringView : MonoBehaviour
     private Camera _camera;
 
     private bool _isHolding = false;
+    private bool _levelEnd = false;
+
     private Vector2 _rotateAxis = Vector2.zero;
 
     private EditableModel[] _models;
@@ -41,6 +43,9 @@ public class ColoringView : MonoBehaviour
     #region Tools
     private void HandleTools()
     {
+        if (_levelEnd)
+            return;
+
         if (!_isHolding)
             return;
 
@@ -53,6 +58,14 @@ public class ColoringView : MonoBehaviour
         else
             ClearTexutre();
     }
+
+    public EditableModel[] EndLevel()
+    {
+        _levelEnd = true;
+
+        return _models;
+    }
+
     private void RotateModel()
     {
         foreach (var editableModel in _models)

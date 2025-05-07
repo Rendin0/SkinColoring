@@ -15,6 +15,8 @@ public class ScreenCustomSkinView : WindowView<ScreenCustomSkinViewModel>
     [SerializeField] private TMP_Text _coinsText;
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private CustomSkinColors _colors;
+    [SerializeField] private TipsContainer _customSkinTips;
+
 
     private readonly CompositeDisposable _subs = new();
 
@@ -25,6 +27,9 @@ public class ScreenCustomSkinView : WindowView<ScreenCustomSkinViewModel>
         _settingsButton.onClick.AddListener(OnSettingsButtonClicked);
         _levelsButton.onClick.AddListener(OnLevelsButtonClicked);
         _getCoinsButton.onClick.AddListener(OnGetCoinsButtonClicked);
+
+        _customSkinTips.Init();
+        _customSkinTips.gameObject.SetActive(false);
     }
 
     private void OnGetCoinsButtonClicked()
@@ -44,7 +49,20 @@ public class ScreenCustomSkinView : WindowView<ScreenCustomSkinViewModel>
         _coloringView.Bind(viewModel, viewModel.GameState.UnlockedColors);
         viewModel.Coins.Subscribe(c => _coinsText.text = $"{c}").AddTo(_subs);
         viewModel.Score.Subscribe(s => _scoreText.text = $"{s}").AddTo(_subs);
+
+        if (viewModel.GameState.LevelId.CurrentValue >= 2 && !ViewModel.HasSeenCustomSkinTips.CurrentValue)
+        {
+            _customSkinTips.gameObject.SetActive(true);
+            _customSkinTips.StartTips().Subscribe(_ => OnCustomSkinTipsEnded());
+        }
     }
+
+    private void OnCustomSkinTipsEnded()
+    {
+        _customSkinTips.gameObject.SetActive(false);
+        ViewModel.EndCustomSkinTips();
+    }
+
     private void OnDestroy()
     {
         _subs.Dispose();

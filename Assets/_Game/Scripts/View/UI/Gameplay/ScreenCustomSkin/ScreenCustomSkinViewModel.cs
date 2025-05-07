@@ -1,5 +1,6 @@
 
 using R3;
+using System;
 using UnityEngine;
 
 public class ScreenCustomSkinViewModel : WindowViewModel, IColoringViewModel
@@ -13,7 +14,7 @@ public class ScreenCustomSkinViewModel : WindowViewModel, IColoringViewModel
     public GameState GameState { get; }
     public Observable<int> Coins { get; }
     public Observable<int> Score { get; }
-
+    public ReactiveProperty<bool> HasSeenCustomSkinTips { get; }
 
     private readonly GameplayUIManager _uiManager;
     private readonly CompositeDisposable _subs = new();
@@ -30,9 +31,12 @@ public class ScreenCustomSkinViewModel : WindowViewModel, IColoringViewModel
                 RMB.OnNext(c.performed);
         }).AddTo(_subs);
 
+        SkinCamera = skinCamera;
+        
         Score = gameState.Score;
         Coins = gameState.Coins;
-        SkinCamera = skinCamera;
+        HasSeenCustomSkinTips = gameState.HasSeenCustomSkinTip;
+
         GameState = gameState;
     }
 
@@ -51,5 +55,10 @@ public class ScreenCustomSkinViewModel : WindowViewModel, IColoringViewModel
         base.Dispose();
 
         _subs.Dispose();
+    }
+
+    public void EndCustomSkinTips()
+    {
+        HasSeenCustomSkinTips.OnNext(true);
     }
 }

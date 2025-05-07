@@ -104,7 +104,6 @@ namespace Assets._Game.Scripts.Game.Root
 
             var stateService = _rootContainer.Resolve<GameStateService>();
             stateService.GameState.LevelId.Value += 1;
-            stateService.Save();
 
             _rootContainer.Resolve<InputActions>().Gameplay.Disable();
 

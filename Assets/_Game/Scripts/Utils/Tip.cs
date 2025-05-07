@@ -1,4 +1,6 @@
 using R3;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Tip : MonoBehaviour
 {
@@ -9,7 +11,7 @@ public class Tip : MonoBehaviour
 
     private void OnEnable()
     {
-        _tipButton.onClick.AddListener(OnTipButtonClicked)
+        _tipButton.onClick.AddListener(OnTipButtonClicked);
     }
 
     private void OnDisable()
@@ -19,6 +21,9 @@ public class Tip : MonoBehaviour
 
     private void OnTipButtonClicked()
     {
+        if (_disableButtonOnClick)
+            _tipButton.gameObject.SetActive(false);
+
         NextTipRequest.OnNext(Unit.Default);
     }
 }

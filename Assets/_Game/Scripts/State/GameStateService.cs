@@ -2,6 +2,7 @@ using ObservableCollections;
 using R3;
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using YG;
 
@@ -60,7 +61,7 @@ public class GameStateService : IDisposable
         return true;
     }
 
-    public void Save()
+    private void Save()
     {
         _stateProvider.Save(GameState);
     }
@@ -69,7 +70,19 @@ public class GameStateService : IDisposable
     {
         GameState = _stateProvider.Load();
         LoadColors(GameState);
+        SubscribeChanges(GameState);
         Save();
+    }
+
+    private void SubscribeChanges(GameState gameState)
+    {
+        gameState.Coins.Subscribe(_ => Save());
+        gameState.Score.Subscribe(_ => Save());
+        gameState.LevelId.Subscribe(_ => Save());
+        gameState.UnlockedColors.ObserveChanged().Subscribe(_ => Save());
+
+        gameState.HasSeenCustomSkinTip.Subscribe(_ => Save());
+        gameState.HasSeenGeneralTip.Subscribe(_ => Save());
     }
 
     private void LoadColors(GameState gameState)

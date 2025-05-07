@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets._Game.Scripts.Game.Root;
 using ObservableCollections;
 using R3;
 using UnityEngine;
@@ -16,9 +18,10 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
     public Subject<bool> RMB { get; } = new();
     public Observable<int> Coins;
     public Observable<int> Score;
-    public Observable<bool> HasSeenGeneralTip;
-    public Observable<bool> HasSeenCustomSkinTip;
+    public ReactiveProperty<bool> HasSeenGeneralTip;
+    public ReactiveProperty<bool> HasSeenCustomSkinTip;
     public ObservableDictionary<CustomColorViewModel, bool> Colors;
+    public int LevelId { get; }
 
     public Camera SkinCamera { get; }
 
@@ -39,14 +42,11 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
                 RMB.OnNext(c.performed);
         }).AddTo(_subs);
 
-        CompletePercent.Subscribe(p =>
-        {
-            if (p >= 1f)
-                ContinueLevel();
-        });
+        
 
         Score = gameState.Score;
         Coins = gameState.Coins;
+        LevelId = gameState.LevelId.Value;
         HasSeenGeneralTip = gameState.HasSeenGeneralTip;
         HasSeenCustomSkinTip = gameState.HasSeenCustomSkinTip;
 
@@ -77,8 +77,18 @@ public class ScreenGameplayViewModel : WindowViewModel, IColoringViewModel
         _uiManager.SkipLevel();
     }
 
-    private void ContinueLevel()
+    public void ContinueLevel()
     {
         _uiManager.ContinueLevel();
+    }
+
+    public void EndGeneralTips()
+    {
+        HasSeenGeneralTip.OnNext(true);
+    }
+
+    public void EndCustomSkinTips()
+    {
+        HasSeenCustomSkinTip.OnNext(true);
     }
 }

@@ -1,4 +1,5 @@
 using R3;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,9 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     [SerializeField] private TMP_Text _scoreText;
 
     [SerializeField] private ScrollRect _scrollBar;
+
+    [SerializeField] private TipsContainer _generalTips;
+    [SerializeField] private TipsContainer _customSkinTips;
 
     private readonly CompositeDisposable _subs = new();
 
@@ -41,6 +45,11 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
         _settingsButton.onClick.AddListener(OnSettingsButtonClicked);
         _customSkinButton.onClick.AddListener(OnCustomSkinButtonClicked);
         _skipLevelButton.onClick.AddListener(OnSkipLevelButtonClicked);
+
+        _generalTips.Init();
+        _customSkinTips.Init();
+        _generalTips.gameObject.SetActive(false);
+        _customSkinTips.gameObject.SetActive(false);
     }
 
     private void OnDisable()
@@ -56,11 +65,34 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
         ViewModel.Coins.Subscribe(c => _coinsText.text = $"{c}").AddTo(_subs);
         ViewModel.Score.Subscribe(s => _scoreText.text = $"{s}").AddTo(_subs);
 
+        ViewModel.CompletePercent.Skip(5).Subscribe(p =>
+        {
+            if (p >= 1f)
+                EndLevel();
+        });
+
         _coloringView.Bind(viewModel, viewModel.Colors, UpdatePercents);
 
         _scrollBar.horizontalNormalizedPosition = 0f;
+
+        if (!ViewModel.HasSeenGeneralTip.CurrentValue)
+        {
+            _generalTips.gameObject.SetActive(true);
+            _generalTips.StartTips().Subscribe(_ => OnGeneralTipsEnded());
+        }
+
+        if (ViewModel.LevelId >= 2 && !ViewModel.HasSeenCustomSkinTip.CurrentValue)
+        {
+            _customSkinTips.gameObject.SetActive(true);
+            _customSkinTips.StartTips();
+        }
     }
 
+    private void OnGeneralTipsEnded()
+    {
+        _generalTips.gameObject.SetActive(false);
+        ViewModel.EndGeneralTips();
+    }
     private void OnDestroy()
     {
         _subs.Dispose();
@@ -79,6 +111,32 @@ public class ScreenGameplayView : WindowView<ScreenGameplayViewModel>
     private void OnSkipLevelButtonClicked()
     {
         ViewModel.SkipLevel();
+    }
+
+    private void EndLevel()
+    {
+        var models = _coloringView.EndLevel();
+        var startRotation = models[0].transform.rotation;
+        var endRotation = new Quaternion(0, 270, 0, 0);
+
+        var vidPlayer = FindFirstObjectByType<VidPlayer>();
+        vidPlayer.PlayVideo();
+
+
+        float time = 30f;
+        float waitTimer = 0f;
+
+        while (waitTimer <= time)
+        {
+            models[0].transform.rotation = Quaternion.Lerp(startRotation, endRotation, waitTimer / time);
+            models[1].transform.rotation = Quaternion.Lerp(startRotation, endRotation, waitTimer / time);
+
+            waitTimer += Time.deltaTime;
+        }
+
+        vidPlayer.StopVideo();
+
+        ViewModel.ContinueLevel();
     }
     #endregion
 }
