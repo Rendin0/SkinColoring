@@ -152,11 +152,14 @@ public class ColoringView : MonoBehaviour
 
     private void InitColors(ObservableDictionary<CustomColorViewModel, bool> colors)
     {
+        Canvas canvas = FindFirstObjectByType<Canvas>();
+
         foreach (var color in colors)
         {
             var button = Instantiate(_colorButtonPrefab);
             button.Bind(color.Key);
             button.transform.SetParent(_colorButtonsContainer, true);
+            button.transform.localScale *= canvas.scaleFactor;
 
             _colorButtons.Add(button.Button);
         }

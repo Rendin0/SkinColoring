@@ -90,9 +90,12 @@ public class GameStateService : IDisposable
         if (gameState.UnlockedColors.Count == 0)
         {
             var colors = Resources.Load<CustomSkinColors>("CustomSkinColors");
-            foreach (var color in colors.Colors)
+            var customColor = new CustomColorViewModel(colors.Colors[0], true);
+            gameState.UnlockedColors[customColor] = customColor.IsObtained.Value;
+
+            for (int i = 1; i < colors.Colors.Count; i++)
             {
-                var customColor = new CustomColorViewModel(color, false);
+                customColor = new CustomColorViewModel(colors.Colors[i], false);
                 gameState.UnlockedColors[customColor] = customColor.IsObtained.Value;
             }
         }
