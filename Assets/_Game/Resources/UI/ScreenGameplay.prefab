@@ -1336,7 +1336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1871,6 +1871,7 @@ GameObject:
   - component: {fileID: 4347226185492583462}
   - component: {fileID: 4216742532809576505}
   - component: {fileID: 1636952054721632044}
+  - component: {fileID: 3586135804443543973}
   m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -1939,6 +1940,56 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u0420\u0438\u0441\u0443\u0439 \u0441 \u043F\u043E\u043C\u043E\u0449\u044C\u044E"
+--- !u!114 &3586135804443543973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4439697869078390114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f34f36451b093ee4c83ad4aa5459d2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textLComponent: {fileID: 1636952054721632044}
+  infoYG: {fileID: 11400000, guid: 162644796a8b0d044bce3d6fda0641e3, type: 2}
+  text: 
+  ru: "\u0420\u0438\u0441\u0443\u0439 \u0441 \u043F\u043E\u043C\u043E\u0449\u044C\u044E"
+  en: Draw with
+  tr: Draw with
+  az: 
+  be: 
+  he: 
+  hy: 
+  ka: 
+  et: 
+  fr: 
+  kk: 
+  ky: 
+  lt: 
+  lv: 
+  ro: 
+  tg: 
+  tk: 
+  uk: 
+  uz: 
+  es: 
+  pt: 
+  ar: 
+  id: 
+  ja: 
+  it: 
+  de: 
+  hi: 
+  changeOnlyFont: 0
+  fontNumber: 0
+  uniqueFont: {fileID: 0}
+  additionalText: {fileID: 0}
+  textHeight: 20
+  processTranslateLabel: 
+  componentTextField: 0
+  countLang: 0
 --- !u!1 &4471685437102683369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,6 +2001,7 @@ GameObject:
   - component: {fileID: 4227147595547033063}
   - component: {fileID: 3967639699035272444}
   - component: {fileID: 2099560319995769274}
+  - component: {fileID: 6017244737471718393}
   m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -2019,6 +2071,57 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "\u0420\u0430\u0437\u0440\u0438\u0441\u0443\u0439 \u0441\u0432\u043E\u0439
     \u0441\u043A\u0438\u043D"
+--- !u!114 &6017244737471718393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4471685437102683369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f34f36451b093ee4c83ad4aa5459d2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textLComponent: {fileID: 2099560319995769274}
+  infoYG: {fileID: 11400000, guid: 162644796a8b0d044bce3d6fda0641e3, type: 2}
+  text: 
+  ru: "\u0420\u0430\u0437\u0440\u0438\u0441\u0443\u0439 \u0441\u0432\u043E\u0439
+    \u0441\u043A\u0438\u043D"
+  en: Color your skin
+  tr: Color your skin
+  az: 
+  be: 
+  he: 
+  hy: 
+  ka: 
+  et: 
+  fr: 
+  kk: 
+  ky: 
+  lt: 
+  lv: 
+  ro: 
+  tg: 
+  tk: 
+  uk: 
+  uz: 
+  es: 
+  pt: 
+  ar: 
+  id: 
+  ja: 
+  it: 
+  de: 
+  hi: 
+  changeOnlyFont: 0
+  fontNumber: 0
+  uniqueFont: {fileID: 0}
+  additionalText: {fileID: 0}
+  textHeight: 20
+  processTranslateLabel: 
+  componentTextField: 0
+  countLang: 0
 --- !u!1 &4579067922430058959
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,7 +2726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3129,6 +3232,7 @@ GameObject:
   - component: {fileID: 7199452684488504170}
   - component: {fileID: 5426101453323049616}
   - component: {fileID: 5155256649377426723}
+  - component: {fileID: 2967834426406473620}
   m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -3197,6 +3301,56 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u041F\u043E\u043A\u0440\u0443\u0442\u0438 \u0441\u043A\u0438\u043D"
+--- !u!114 &2967834426406473620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5831290315548685054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f34f36451b093ee4c83ad4aa5459d2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textLComponent: {fileID: 5155256649377426723}
+  infoYG: {fileID: 11400000, guid: 162644796a8b0d044bce3d6fda0641e3, type: 2}
+  text: 
+  ru: "\u041F\u043E\u043A\u0440\u0443\u0442\u0438 \u0441\u043A\u0438\u043D"
+  en: Rotate skin
+  tr: Rotate skin
+  az: 
+  be: 
+  he: 
+  hy: 
+  ka: 
+  et: 
+  fr: 
+  kk: 
+  ky: 
+  lt: 
+  lv: 
+  ro: 
+  tg: 
+  tk: 
+  uk: 
+  uz: 
+  es: 
+  pt: 
+  ar: 
+  id: 
+  ja: 
+  it: 
+  de: 
+  hi: 
+  changeOnlyFont: 0
+  fontNumber: 0
+  uniqueFont: {fileID: 0}
+  additionalText: {fileID: 0}
+  textHeight: 20
+  processTranslateLabel: 
+  componentTextField: 0
+  countLang: 0
 --- !u!1 &5871390955285443082
 GameObject:
   m_ObjectHideFlags: 0

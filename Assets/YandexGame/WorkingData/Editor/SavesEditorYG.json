@@ -1,7 +1,7 @@
 {
-    "idSave": 21,
+    "idSave": 130,
     "isFirstSession": false,
-    "language": "ru",
+    "language": "en",
     "promptDone": false,
     "money": 1,
     "newPlayerName": "Hello!",
@@ -10,7 +10,7 @@
         true,
         false
     ],
-    "LevelId": 0,
+    "LevelId": 2,
     "Score": 0,
     "Coins": 0,
     "UnlockedColors": {
@@ -44,6 +44,6 @@
             }
         ]
     },
-    "HasSeenGeneralTip": false,
-    "HasSeenCustomSkinTip": false
+    "HasSeenGeneralTip": true,
+    "HasSeenCustomSkinTip": true
 }
